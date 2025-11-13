@@ -6,55 +6,32 @@ import Rooms.Celda;
 import java.security.Guard;
 import java.text.ParseException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
 
 public class Sistema {
     private Manager<Guardia> registroGuardias;
     private Manager<Prisionero> registroPrisioneros;
-    private HashMap<Integer ,Celda> listaCeldas;
+    private List<Celda> listaCeldas;
+
+    public Sistema() {
+        this.registroGuardias = new Manager<>();
+        this.registroPrisioneros = new Manager<>();
+        this.listaCeldas = new ArrayList<>();
+    }
 
     //Guardias metodos
     //Metodos para agregar los distintos tipos de guardia
-    public void agregarGuardiaComun (){
-        Scanner sc = new Scanner(System.in);
+    public String agregarGuardiaComun (){
 
         try{
-            System.out.println("Nombre: ");
-            String nombre = sc.nextLine();
-            System.out.println("Apellido: ");
-            String apellido = sc.nextLine();
-            System.out.println("DNI: ");
-            String dni = sc.nextLine();
-            System.out.println("Edad: ");
-            int edad = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Legajo: ");
-            int legajo = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Fecha de nacimiento (yyyy/MM/dd): ");
-            LocalDate fechaNacimiento = LocalDate.parse(sc.nextLine());
-            System.out.println("Turno (MANIANA/TARDE/NOCHE: ");
-            Turno turno = Turno.valueOf(sc.nextLine().toUpperCase());
-            System.out.println("Numero de celda asignada: ");
-            int numCeldas = sc.nextInt();
-            sc.nextLine();
-            System.out.println("¿Esta en servicio? (true/false): ");
-            boolean enServicio = sc.nextBoolean();
-            sc.nextLine();
-            System.out.println("Rango (OFICIAL/COMISARIO_GENERAL/COMISARIO_MAYOR/JEFE_DE_SEGURIDAD/DIRECTOR_GENERAL");
-            Rango rango = Rango.valueOf(sc.nextLine().toUpperCase());
-            System.out.println("¿Tiene gas pimienta? (true/false): ");
-            boolean gasPimienta = sc.nextBoolean();
-            sc.nextLine();
-
-            Guardia g = new Comun(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCeldas, enServicio, rango, gasPimienta);
-            registroGuardias.agregar(dni, g);
-            System.out.println("Guardia comun agregado con exito");
-
+            UtilesMain.agregarGComun();
         }catch (Exception e){
-            System.out.println("Error al agregar guardia comun" + e.getMessage());
+            return "Error al agregar guardia comun" + e.getMessage();
         }
+        return "Guardia comun agregado con exito";
     }
 
     public void agregarGuardiaArmado (){
