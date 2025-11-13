@@ -16,6 +16,7 @@ public class Armado extends Guardia {
         return arma;
     }
 
+    //Metodos
     //asignar o reasignar arma
     public void asignarArma (Arma nuevaArma)throws PermisoDenegadoEx {
         if (getRango() == Rango.COMISARIO_MAYOR){
@@ -35,17 +36,6 @@ public class Armado extends Guardia {
         } else{
             System.out.println("El guardia no tenia un arma asignada");
         }
-    }
-
-    @Override
-    public boolean darDescanso() {
-        if (isEnServicio() && getTurno() == Turno.NOCHE){
-            setEnServicio(false);
-            System.out.println("El guardia " + getNombre() + " tiene el descanso");
-        } else{
-            System.out.println("El guardia " + getNombre() + " no puede descansar durante ese turno");
-        }
-        return isEnServicio();
     }
 
     @Override

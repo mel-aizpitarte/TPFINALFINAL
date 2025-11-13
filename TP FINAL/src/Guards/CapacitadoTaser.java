@@ -17,6 +17,7 @@ public class CapacitadoTaser extends Guardia {
         return fechaCapacitacion;
     }
 
+    //Metodos
     public boolean isTieneTaser() {
         return tieneTaser;
     }
@@ -40,17 +41,6 @@ public class CapacitadoTaser extends Guardia {
     public void actualizarCapacitacion (){
         fechaCapacitacion = LocalDate.now();
         System.out.println("Capacitacion actualizada para " + getNombre() + getApellido());
-    }
-
-    @Override
-    public boolean darDescanso() {
-        if (isEnServicio() && getTurno() == Turno.TARDE){
-            setEnServicio(false);
-            System.out.println("El guardia " + getNombre() + " tiene el descanso");
-        } else{
-            System.out.println("El guardia " + getNombre() + " ya estaba en el descanso");
-        }
-        return isEnServicio();
     }
 
     @Override

@@ -1,4 +1,9 @@
+package Utiles;
+
 import Guards.*;
+import Prisoners.CrimenCometido;
+import Prisoners.Prisionero;
+import Prisoners.Seguridad;
 
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -41,7 +46,7 @@ public class UtilesMain {
 
     }
 
-    public static Armado guardiaArm (){
+    public static Armado agregarGuardiaArm (){
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Nombre: ");
@@ -108,6 +113,53 @@ public class UtilesMain {
             return new CapacitadoTaser(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCeldas, enServicio, rango, LocalDate.now(), taser);
     }
 
+    public static String pedirDni (){
+        Scanner sc = new Scanner(System.in);
 
+        System.out.println("Ingrese el DNI: ");
+        String dni = sc.nextLine();
+        sc.nextLine();
+
+        return dni;
+    }
+
+    public static Prisionero prisionero (){
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Nombre:");
+        String nombre = sc.nextLine();
+
+        System.out.println("Apellido:");
+        String apellido = sc.nextLine();
+
+        System.out.println("DNI:");
+        String dni = sc.nextLine();
+
+        System.out.println("Edad:");
+        int edad = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Fecha de nacimiento (AAAA-MM-DD):");
+        LocalDate nacimiento = LocalDate.parse(sc.nextLine());
+
+        System.out.println("Crimen cometido:");
+        CrimenCometido crimen = CrimenCometido.valueOf(sc.nextLine().toUpperCase());
+
+        System.out.println("Nivel de seguridad (BAJA/MEDIA/ALTA): ");
+        Seguridad seguridad = Seguridad.valueOf(sc.nextLine().toUpperCase());
+
+        System.out.println("Condena en meses:");
+        int condena = sc.nextInt();
+        sc.nextLine();
+
+      return new Prisionero(nombre, apellido, dni, edad, nacimiento, LocalDate.now(), null, crimen, seguridad, condena);
+    }
+
+    public static int numCelda (){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el numero de celda a asignar: ");
+        int numCeldas = sc.nextInt();
+        return numCeldas;
+    }
 
 }

@@ -3,12 +3,9 @@ import Excepciones.PermisoDenegadoEx;
 import Guards.*;
 import Prisoners.Prisionero;
 import Rooms.Celda;
+import Utiles.UtilesMain;
 
-import java.security.Guard;
-import java.text.ParseException;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -39,7 +36,7 @@ public class Sistema {
     public void agregarGuardiaArmado (){
 
         try{
-            Armado nuevo = UtilesMain.guardiaArm();
+            Armado nuevo = UtilesMain.agregarGuardiaArm();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
             System.out.println("Guardia comun agregado con exito");
         }catch (Exception e){
@@ -55,19 +52,6 @@ public class Sistema {
             System.out.println("Guardia comun agregado con exito");
         }catch (Exception e){
             System.out.println("Error al agregar guardia capacitado taser" + e.getMessage());
-        }
-    }
-
-    public void darDescansoGuardia (){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese el DNI del guardia: ");
-        String dni = sc.nextLine();
-
-        Guardia g = registroGuardias.obtener(dni);
-        if (g != null){
-            g.darDescanso();
-        } else {
-            System.out.println("No se encontro un guardia con ese DNI");
         }
     }
 
@@ -167,7 +151,126 @@ public class Sistema {
 
 
     //Prisioneros metodos
+    public void agregarPrisionero (){
+        try{
+            Prisionero p = UtilesMain.prisionero();
+            registroPrisioneros.agregar(p.getDni(),p);
+            System.out.println("Prisionero agregado exitosamente");
+        }catch (Exception e){
+            System.out.println("Error al agregar prisionero: " + e.getMessage());
+        }
+    }
 
+    public void mostrarPrisioneros(){
+        if (registroPrisioneros.estaVacio()) {
+            System.out.println("No hay prisioneros cargados");
+            return;
+        }
+        registroPrisioneros.mostrar();
+    }
+
+    public void asignarCeldaAPris (){
+
+        try{
+            String dni =  UtilesMain.pedirDni();
+            Prisionero p = registroPrisioneros.obtener(dni);
+
+            if (p == null){
+                System.out.println("No se encontro el prisionero con el DNI: "+ dni);
+                return;
+            }
+
+            int numCelda = UtilesMain.numCelda();
+            Celda c = listaCeldas.get(numCelda);
+
+            if (c == null) {
+                System.out.println("No se encontró la celda con número: " + numCelda);
+                return;
+            }
+
+            if (c.isOcupado()) {
+                System.out.println("La celda ya está ocupada.");
+                return;
+            }
+
+            p.asignarCelda(c);
+            c. ;//TERMINAR IVAN
+            System.out.println("Prisionero" + p.getNombre()+ "asignado a la celda"+ numCelda);
+
+        } catch (AccionInvalidaEx e){
+            System.out.println("No se pudo asignar la celda: " + e.getMessage());
+        } catch (Exception e){
+            System.out.println("Ocurrio un error: "+e.getMessage());
+        }
+
+    }
+
+    public void solicitarVis (){
+        String dni =  UtilesMain.pedirDni();
+        Prisionero p = registroPrisioneros.obtener(dni);
+
+        if (p == null){
+            System.out.println("Prisionero no encontrado");
+            return;
+        }
+
+        try{
+            p.solicitarVisita(true);
+            p.registrarVisita();
+            System.out.println("Visita registrada correctamente. Total de visitas este mes: " + p.getVisitasEsteMes());
+        } catch (AccionInvalidaEx e){
+            System.out.println("No se pudo registrar la visita: " + e.getMessage());
+        }
+
+    }
+
+    public void registrarVis (){
+        String dni =  UtilesMain.pedirDni();
+        Prisionero p = registroPrisioneros.obtener(dni);
+
+        if (p == null){
+            System.out.println("Prisionero no encontrado");
+            return;
+        }
+
+        try{
+            p.registrarVisita();
+            System.out.println("Visita registrada");
+        }catch (AccionInvalidaEx e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void mostrarVisitasPrisionero (){
+      String dni = UtilesMain.pedirDni();
+      Prisionero p = registroPrisioneros.obtener(dni);
+      if (p == null){
+          System.out.println("No se encontro el prisionero con DNI: " + dni);
+          return;
+      }
+        System.out.println("------ Información de Visitas del Prisionero ------");
+        System.out.println("Nombre: " + p.getNombre() + " " + p.getApellido());
+        System.out.println("DNI: " + dni);
+        System.out.println("Visitas realizadas este mes: " + p.getVisitasEsteMes());
+        System.out.println("Límite de visitas por mes: " + p.getLimiteVisitas());
+
+        int restantes = p.getLimiteVisitas() - p.getVisitasEsteMes();
+        if (restantes > 0){
+            System.out.println("Visitas restantes este mes: " + restantes);
+        } else {
+            System.out.println("El prisionero ya alcanzó el límite de visitas este mes");
+        }
+    }
+
+    public void mostrarTiempoRestante (){
+        String dni =  UtilesMain.pedirDni();
+        Prisionero p = registroPrisioneros.obtener(dni);
+        if (p == null){
+            System.out.println("No se encontro el prisionero con DNI: " + dni);
+            return;
+        }
+        System.out.println(p.cumplirCondena());
+    }
 
     //Celdas metodos
 }
