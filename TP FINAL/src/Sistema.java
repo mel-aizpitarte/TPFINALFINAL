@@ -32,20 +32,18 @@ public class Sistema {
             registroGuardias.agregar(nuevo.getDni(), nuevo);
             System.out.println("Guardia comun agregado correctamente");
         }catch (Exception e){
-            return "Error al agregar guardia comun" + e.getMessage();
+            return "Error al agregar guardia comun: " + e.getMessage();
         }
         return "Guardia comun agregado con exito";
     }
 
     public void agregarGuardiaArmado (){
-
-
         try{
             Armado nuevo = UtilesMain.guardiaArm();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
-            System.out.println("Guardia comun agregado con exito");
-        }catch (Exception e){
-            System.out.println("Error al agregar guardia armado" + e.getMessage());
+            System.out.println("Guardia armado agregado con exito");
+        }catch (PermisoDenegadoEx e){
+            System.out.println("Error al agregar guardia armado: " + e.getMessage());
         }
     }
 
@@ -60,18 +58,6 @@ public class Sistema {
         }
     }
 
-    public void darDescansoGuardia (){
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Ingrese el DNI del guardia: ");
-        String dni = sc.nextLine();
-
-        Guardia g = registroGuardias.obtener(dni);
-        if (g != null){
-            g.darDescanso();
-        } else {
-            System.out.println("No se encontro un guardia con ese DNI");
-        }
-    }
 
     public void mostrarGuardiasEnServicio (){
         for (Guardia g : registroGuardias.getLista().values()){

@@ -15,6 +15,8 @@ public class CeldaComun extends Celda{
     /*
     public void agregarPreso(//Parametros de preso){
 
+setOcupado
+setLleno
     }
 
     public void eliminarPreso(int index){
@@ -38,22 +40,22 @@ public class CeldaComun extends Celda{
     }
     */
 
-
-    public Prisionero getPrisioneroPorIndex(int index){
-        return presos.get(index);
+    public String mostrarPresoIndex(int index){
+        return presos.get(index).toString();
     }
 
-    public boolean getTv(){
-        return hasTv;
-    }
+    public boolean getTv(){return hasTv;}
 
-    public void asignarTv(){
-        this.hasTv = true;
-    }
+    public void asignarTv(){this.hasTv = true;}
 
     public CeldaComun(int numeroDeCelda, int capacidad) {
         super(numeroDeCelda, capacidad);
         this.hasTv = false;
         this.presos = new ArrayList<>();
+    }
+
+    @Override
+    public String toString() {
+        return "Celda Comun: {" + super.toString() + ", hasTv=" + hasTv + ", presos=" + presos + '}';
     }
 }

@@ -1,3 +1,4 @@
+import Excepciones.PermisoDenegadoEx;
 import Guards.*;
 
 import java.time.LocalDate;
@@ -41,7 +42,7 @@ public class UtilesMain {
 
     }
 
-    public static Armado guardiaArm (){
+    public static Armado guardiaArm ()throws PermisoDenegadoEx {
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Nombre: ");
@@ -68,13 +69,16 @@ public class UtilesMain {
         sc.nextLine();
         System.out.println("Rango (OFICIAL/COMISARIO_GENERAL/COMISARIO_MAYOR/JEFE_DE_SEGURIDAD/DIRECTOR_GENERAL");
         Rango rango = Rango.valueOf(sc.nextLine().toUpperCase());
+        if(rango==Rango.OFICIAL){
+            throw new PermisoDenegadoEx("Rango bajo");
+        }
         System.out.println("Arma asignada (PISTOLA/RIFLE/ESCOPETA");
         Arma arma = Arma.valueOf(sc.nextLine().toUpperCase());
 
         return new Armado(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCeldas, enServicio, rango, arma);
     }
 
-    public static CapacitadoTaser agregarCT ()throws Exception {
+    public static CapacitadoTaser agregarCT () throws Exception {
         Scanner sc = new Scanner(System.in);
 
             System.out.println("Nombre: ");

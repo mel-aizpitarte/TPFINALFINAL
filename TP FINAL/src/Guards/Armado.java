@@ -7,9 +7,14 @@ import java.time.LocalDate;
 public class Armado extends Guardia {
     private Arma arma;
 
-    public Armado(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numCelda, boolean enServicio, Rango rango, Arma arma) {
-        super(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, rango);
-        this.arma = arma;
+    public Armado(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numCelda, boolean enServicio, Rango rango, Arma arma){
+        if (rango == Rango.OFICIAL) {
+            super(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, Rango.COMISARIO_MAYOR);
+            this.arma = arma;
+        }else{
+            super(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, rango);
+            this.arma = arma;
+        }
     }
 
     public Arma getArma() {
@@ -35,17 +40,6 @@ public class Armado extends Guardia {
         } else{
             System.out.println("El guardia no tenia un arma asignada");
         }
-    }
-
-    @Override
-    public boolean darDescanso() {
-        if (isEnServicio() && getTurno() == Turno.NOCHE){
-            setEnServicio(false);
-            System.out.println("El guardia " + getNombre() + " tiene el descanso");
-        } else{
-            System.out.println("El guardia " + getNombre() + " no puede descansar durante ese turno");
-        }
-        return isEnServicio();
     }
 
     @Override

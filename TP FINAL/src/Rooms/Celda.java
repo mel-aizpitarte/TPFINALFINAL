@@ -1,14 +1,14 @@
 package Rooms;
 import Guards.*;
+import Interfaces.Cuarentena;
 import Prisoners.Prisionero;
 
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.time.LocalDateTime;
 
 
-public abstract class Celda implements Cuarentena{
+public abstract class Celda implements Cuarentena {
 
     private boolean flag;
     private boolean ocupado;
@@ -16,7 +16,6 @@ public abstract class Celda implements Cuarentena{
     private int numeroDeCelda;
     private int capacidad;
     private Guardia guardiaAsignado;
-    private Prisionero prisionero;
     private LocalDateTime ultimaInspeccion;
 
 
@@ -25,21 +24,17 @@ public abstract class Celda implements Cuarentena{
 
     public int getCapacidad() {return capacidad;}
 
-    public boolean isOcupado() {
-        return ocupado;
-    }
+    public boolean isOcupado() {return ocupado;}
 
-    public boolean isLleno() {
-        return lleno;
-    }
+    public void setOcupado() {this.ocupado = !this.ocupado;}
 
-    public String getUltimaInspeccion() {
-        return ultimaInspeccion.toString();
-    }
+    public boolean isLleno() {return lleno;}
 
-    public void setUltimaInspeccion(LocalDateTime ultimaInspeccion) {
-        this.ultimaInspeccion = ultimaInspeccion;
-    }
+    public void setLleno(){this.lleno=!this.lleno;}
+
+    public String getUltimaInspeccion() {return ultimaInspeccion.toString();}
+
+    public void setUltimaInspeccion(LocalDateTime ultimaInspeccion) {this.ultimaInspeccion = ultimaInspeccion;}
     ///  Getters and setters
 
 
@@ -64,6 +59,11 @@ public abstract class Celda implements Cuarentena{
 
     /// Falta asignar prisionero
 
+    @Override
+    public void cuarentena() {
+        this.flag= !this.flag;
+    }
+
 
     public Celda(int numeroDeCelda, int capacidad) {
         this.flag=false;
@@ -71,13 +71,14 @@ public abstract class Celda implements Cuarentena{
         this.capacidad = capacidad;
     }
 
-    @Override
-    public void cuarentena() {
-        if(this.flag) {
-            this.flag=false;
-        }else  {
-            this.flag=true;
-        }
-    }
 
+    @Override
+    public String toString() {
+        return "Numero de la Celda=" + numeroDeCelda +
+                ", Capacidad=" + capacidad +
+                ", Ocupado=" + ocupado +
+                ", Lleno=" + lleno +
+                ", Guardia Asignado=" + guardiaAsignado +
+                ", Ultima Inspeccion=" + ultimaInspeccion;
+    }
 }

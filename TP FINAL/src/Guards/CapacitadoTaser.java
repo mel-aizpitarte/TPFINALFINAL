@@ -42,16 +42,7 @@ public class CapacitadoTaser extends Guardia {
         System.out.println("Capacitacion actualizada para " + getNombre() + getApellido());
     }
 
-    @Override
-    public boolean darDescanso() {
-        if (isEnServicio() && getTurno() == Turno.TARDE){
-            setEnServicio(false);
-            System.out.println("El guardia " + getNombre() + " tiene el descanso");
-        } else{
-            System.out.println("El guardia " + getNombre() + " ya estaba en el descanso");
-        }
-        return isEnServicio();
-    }
+
 
     @Override
     public String toString() {

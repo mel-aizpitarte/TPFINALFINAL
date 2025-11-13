@@ -1,7 +1,6 @@
 package Persona;
 
 import java.time.LocalDate;
-import Rooms.Cuarentena;
 
 public abstract class Persona {
     private String nombre;
