@@ -24,20 +24,18 @@ public class Sistema {
 
     //Guardias metodos
     //Metodos para agregar los distintos tipos de guardia
-    public String agregarGuardiaComun (){
+    public void agregarGuardiaComun (){
 
         try{
             Comun nuevo = UtilesMain.agregarGComun();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
             System.out.println("Guardia comun agregado correctamente");
         }catch (Exception e){
-            return "Error al agregar guardia comun" + e.getMessage();
+            System.out.println("Error al crear el guardia comun: "+ e.getMessage());
         }
-        return "Guardia comun agregado con exito";
     }
 
     public void agregarGuardiaArmado (){
-
 
         try{
             Armado nuevo = UtilesMain.guardiaArm();

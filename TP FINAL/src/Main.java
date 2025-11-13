@@ -28,23 +28,82 @@ public class Main {
                case 1:
                    System.out.println("----------Configuracion de Guardias----------");
                    Guardia();
-                   opcion= sc.nextInt();
+                   int opcion1 = sc.nextInt();
                    sc.nextLine();
-                   switch (opcion){
 
+                   switch (opcion1){
+                       case 1:
+                           sistema.agregarGuardiaComun();
+                           break;
+                       case 2:
+                           sistema.agregarGuardiaArmado();
+                           break;
+                       case 3:
+                           sistema.agregarGuardiaCapacitadoTaser();
+                           break;
+                       case 4:
+                           System.out.println("----------- Lista de Guardias -----------");
+                           sistema.mostrarGuardias();
+                           break;
+                       case 5:
+                           sistema.darDescansoGuardia();
+                           break;
+                       case 6:
+                           sistema.mostrarGuardiasEnServicio();
+                           break;
+                       case 7:
+                           sistema.mostrarGuardiasFueraDeServicio();
+                           break;
+                       case 8:
+                           sistema.cambiarTurnoGuardia();
+                           break;
+                       case 9:
+                           sistema.asignarOcambiarArma();
+                           break;
+                       case 10:
+                           sistema.asignarGasPimienta();
+                           break;
+                       case 11:
+                           sistema.asignarOactualizarTaser();
+                           break;
                    }
-                   break;
                case 2:
                    System.out.println("----------Configuracion de Prisioneros----------");
                    Prisioneros();
+
+                   int opcion2 = sc.nextInt();
+                   sc.nextLine();
+
+                   switch (opcion2){
+                       case 1:
+                           break;
+                       case 2:
+                           break;
+                   }
                    break;
                case 3:
                    System.out.println("----------Configuracion de Celdas----------");
                    Celdas();
+
+                   int opcion3 = sc.nextInt();
+                   sc.nextLine();
+
+                   switch (opcion3){
+                       case 1:
+                           break;
+                   }
                    break;
                case 4:
                    System.out.println("----------Configuracion de Archivos----------");
                    Archivos();
+
+                   int opcion4 = sc.nextInt();
+                   sc.nextLine();
+
+                   switch (opcion4){
+                       case 1:
+                           break;
+                   }
                    break;
                case 0:
                    System.out.println("Saliendo del sistema....");
@@ -93,10 +152,12 @@ public class Main {
         System.out.println("21.Registrar inspeccion de celda");
         System.out.println("22.Mostrar celdas ocupadas");
         System.out.println("23.Mostrar celdas vacias");
+        System.out.println("Elige una opcion: ");
     }
 
     public static void Archivos (){
         System.out.println("Cargar datos en JSON");
         System.out.println("Guardar datos en JSON");
+        System.out.println("Elige una opcion: ");
     }
 }
