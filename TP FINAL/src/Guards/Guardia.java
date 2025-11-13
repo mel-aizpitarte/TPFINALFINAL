@@ -1,5 +1,6 @@
 package Guards;
 
+import Excepciones.AccionInvalidaEx;
 import Persona.Persona;
 
 import java.time.LocalDate;
@@ -45,8 +46,7 @@ public abstract class Guardia extends Persona {
         this.enServicio = enServicio;
     }
 
-    //si esta en servicio le doy descanso
-    public abstract boolean darDescanso ();
+
 
     public void iniciarServicio (){
         if (!enServicio){
@@ -66,12 +66,12 @@ public abstract class Guardia extends Persona {
         System.out.println("Rango: " + getRango());
     }
 
-    public void cambiarTurno (Turno nuevoTurno){
+    public String cambiarTurno(Turno nuevoTurno)throws AccionInvalidaEx {
         if (!enServicio){
             this.turno = nuevoTurno;
-            System.out.println("Turno cambiado a " + nuevoTurno);
+            return "Turno cambiado a " + nuevoTurno;
         } else {
-            System.out.println("No se puede cambiar turno mientras esta en servicio");
+            throw new AccionInvalidaEx("No se puede cambiar turno mientras en servicio");
         }
     }
 

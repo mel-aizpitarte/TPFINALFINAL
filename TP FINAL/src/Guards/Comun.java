@@ -28,16 +28,6 @@ public class Comun extends Guardia {
         return tieneGasPimienta;
     }
 
-    //Revisa celdas y modifica la fecha de ultima inspeccion
-    public void revisarCeldas (Celda celda) throws AccionInvalidaEx {
-       if (isEnServicio()){
-           celda.setUltimaInspeccion (LocalDate.now());
-           System.out.println("El guardia " + getNombre() + "reviso la celda numero " + celda.getNumero + "el dia " + LocalDate.now());
-       } else {
-           throw new AccionInvalidaEx("El guardia" + getNombre() + "no puede revisar celdas por que esta en descanso")
-       }
-    }
-
     public void patrullar (){
         if (isEnServicio()){
             System.out.println("El guardia "+ getNombre() + "esta patrullando la celda " + getNumCelda());

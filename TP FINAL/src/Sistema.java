@@ -1,3 +1,4 @@
+import Excepciones.AccionInvalidaEx;
 import Excepciones.PermisoDenegadoEx;
 import Guards.*;
 import Prisoners.Prisionero;
@@ -94,9 +95,14 @@ public class Sistema {
         Guardia g = registroGuardias.obtener(dni);
 
         if (g != null){
+
             System.out.println("Ingrese el nuevo turno (MANIANA/TARDE/NOCHE: ");
             Turno nuevo = Turno.valueOf(sc.nextLine().toUpperCase());
-            g.cambiarTurno(nuevo);
+            try {
+                g.cambiarTurno(nuevo);
+            }catch (AccionInvalidaEx e){
+                System.out.println(e.getMessage());
+            }
 
         } else {
             System.out.println("Guardia no encontrado");

@@ -23,9 +23,6 @@ public class CeldaComun extends Celda{
     public void eliminarPresoDNI(int DNI){
     }
 
-
-
-
     public Prisionero getPrisioneroPorDNI(int DNI){
 
         Prisionero p = null;

@@ -1,5 +1,6 @@
 package Rooms;
 
+import Excepciones.AccionInvalidaEx;
 import Prisoners.Prisionero;
 
 public class ConfinamientoSolitario extends Celda{
@@ -24,9 +25,15 @@ public class ConfinamientoSolitario extends Celda{
         return prisonero;
     }
 
-    public void setPrisonero(Prisionero prisonero) {
-        this.prisonero = prisonero;
+    public String agregarPrisonero(Prisionero prisonero) throws AccionInvalidaEx {
+        if(!isLleno()) {
+            this.prisonero = prisonero;
+            return "Prisonero asignado a celda de confinamiento solitario";
+        }else{
+            throw new AccionInvalidaEx("La celda de confinamiento solitario ya esta ocupada");
+        }
     }
+
 
     public ConfinamientoSolitario(int numeroDeCelda, int capacidad, Prisionero prisonero, int diasDeAislamiento) {
         super(numeroDeCelda, capacidad);
