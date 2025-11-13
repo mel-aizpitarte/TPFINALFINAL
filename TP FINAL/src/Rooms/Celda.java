@@ -1,7 +1,5 @@
 package Rooms;
-import Guards.Guardia;
-import Guards.Rango;
-import Guards.Turno;
+import Guards.*;
 import Prisoners.Prisionero;
 
 
@@ -18,32 +16,21 @@ public abstract class Celda implements Cuarentena{
     private int numeroDeCelda;
     private int capacidad;
     private Guardia guardiaAsignado;
+    private Prisionero prisionero;
     private LocalDateTime ultimaInspeccion;
 
 
+    /// Getters and setters
+    public int getNumeroDeCelda() {return numeroDeCelda;}
+
+    public int getCapacidad() {return capacidad;}
 
     public boolean isOcupado() {
         return ocupado;
     }
 
-    public void ChangeOcupado() {
-        if(this.ocupado) {
-            this.ocupado = false;
-        }else {
-            this.ocupado = true;
-        }
-    }
-
     public boolean isLleno() {
         return lleno;
-    }
-
-    public void ChangeLleno() {
-        if(this.lleno) {
-            this.lleno = false;
-        }else {
-            this.lleno = true;
-        }
     }
 
     public String getUltimaInspeccion() {
@@ -53,10 +40,29 @@ public abstract class Celda implements Cuarentena{
     public void setUltimaInspeccion(LocalDateTime ultimaInspeccion) {
         this.ultimaInspeccion = ultimaInspeccion;
     }
+    ///  Getters and setters
 
-    public void asignarGuardia(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numPabellon, boolean enServicio, Rango rango){
-        guardiaAsignado=new Guardia(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numPabellon, enServicio, rango);
+
+    public void ChangeLleno() {
+        this.lleno = !this.lleno;
     }
+
+    /// Asignar guardias
+    public void asignarGuardiaComun(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numCelda, boolean enServicio, Rango rango, boolean tieneGasPimienta){
+        this.guardiaAsignado=new Comun(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, rango, tieneGasPimienta);
+    }
+
+    public void asignarGuardiaTaser(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numCelda, boolean enServicio, Rango rango, LocalDate fechaCapacitacion, boolean tieneTaser){
+        this.guardiaAsignado=new CapacitadoTaser(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, rango, fechaCapacitacion, tieneTaser);
+    }
+
+    public void asignarGuardiaArmado(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numCelda, boolean enServicio, Rango rango, Arma arma){
+        this.guardiaAsignado=new Armado(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, rango, arma);
+    }
+    /// Asignar guardias
+
+
+    /// Falta asignar prisionero
 
 
     public Celda(int numeroDeCelda, int capacidad) {
@@ -74,5 +80,4 @@ public abstract class Celda implements Cuarentena{
         }
     }
 
-    /*Cuando prisionero este realizado, hace falta hacer un constructor para meter directamente prisioneros a la celda */
 }
