@@ -46,24 +46,21 @@ public class Main {
                            sistema.mostrarGuardias();
                            break;
                        case 5:
-                           //darle franco
-                           break;
-                       case 6:
                            sistema.mostrarGuardiasEnServicio();
                            break;
-                       case 7:
+                       case 6:
                            sistema.mostrarGuardiasFueraDeServicio();
                            break;
-                       case 8:
+                       case 7:
                            sistema.cambiarTurnoGuardia();
                            break;
-                       case 9:
+                       case 8:
                            sistema.asignarOcambiarArma();
                            break;
-                       case 10:
+                       case 9:
                            sistema.asignarGasPimienta();
                            break;
-                       case 11:
+                       case 10:
                            sistema.asignarOactualizarTaser();
                            break;
                    }
@@ -143,13 +140,12 @@ public class Main {
         System.out.println("2. Agregar guardia armado");
         System.out.println("3. Agregar guardia capacitado en Taser");
         System.out.println("4. Mostrar todos los guardias");
-        System.out.println("5. Dar descanso a un guardia");
-        System.out.println("6. Mostrar guardias en servicio");
-        System.out.println("7. Mostrar guardias fuera de servicio");
-        System.out.println("8. Cambiar turno de un guardia");
-        System.out.println("9.Asignar o cambiar arma a un guardia armado");
-        System.out.println("10.Asignar gas pimienta a un guardia comun");
-        System.out.println("11.Asignar/actualizar Taser a un guardia capacitado");
+        System.out.println("5. Mostrar guardias en servicio");
+        System.out.println("6. Mostrar guardias fuera de servicio");
+        System.out.println("7. Cambiar turno de un guardia");
+        System.out.println("8.Asignar o cambiar arma a un guardia armado");
+        System.out.println("9.Asignar gas pimienta a un guardia comun");
+        System.out.println("10.Asignar/actualizar Taser a un guardia capacitado");
         System.out.println("Elige una opcion: ");
     }
 

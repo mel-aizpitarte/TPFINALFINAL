@@ -194,7 +194,7 @@ public class Sistema {
             }
 
             p.asignarCelda(c);
-            c. ;//TERMINAR IVAN
+            // c. ;//TERMINAR IVAN
             System.out.println("Prisionero" + p.getNombre()+ "asignado a la celda"+ numCelda);
 
         } catch (AccionInvalidaEx e){
