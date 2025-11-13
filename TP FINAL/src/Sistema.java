@@ -27,7 +27,9 @@ public class Sistema {
     public String agregarGuardiaComun (){
 
         try{
-            UtilesMain.agregarGComun();
+            Comun nuevo = UtilesMain.agregarGComun();
+            registroGuardias.agregar(nuevo.getDni(), nuevo);
+            System.out.println("Guardia comun agregado correctamente");
         }catch (Exception e){
             return "Error al agregar guardia comun" + e.getMessage();
         }
@@ -35,81 +37,23 @@ public class Sistema {
     }
 
     public void agregarGuardiaArmado (){
-        Scanner sc = new Scanner(System.in);
+
 
         try{
-            System.out.println("Nombre: ");
-            String nombre = sc.nextLine();
-            System.out.println("Apellido: ");
-            String apellido = sc.nextLine();
-            System.out.println("DNI: ");
-            String dni = sc.nextLine();
-            System.out.println("Edad: ");
-            int edad = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Legajo: ");
-            int legajo = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Fecha de nacimiento (yyyy/MM/dd): ");
-            LocalDate fechaNacimiento = LocalDate.parse(sc.nextLine());
-            System.out.println("Turno (MANIANA/TARDE/NOCHE: ");
-            Turno turno = Turno.valueOf(sc.nextLine().toUpperCase());
-            System.out.println("Numero de celda asignada: ");
-            int numCeldas = sc.nextInt();
-            sc.nextLine();
-            System.out.println("¿Esta en servicio? (true/false): ");
-            boolean enServicio = sc.nextBoolean();
-            sc.nextLine();
-            System.out.println("Rango (OFICIAL/COMISARIO_GENERAL/COMISARIO_MAYOR/JEFE_DE_SEGURIDAD/DIRECTOR_GENERAL");
-            Rango rango = Rango.valueOf(sc.nextLine().toUpperCase());
-            System.out.println("Arma asignada (PISTOLA/RIFLE/ESCOPETA");
-            Arma arma = Arma.valueOf(sc.nextLine().toUpperCase());
-
-            Guardia g = new Armado(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCeldas, enServicio, rango, arma);
-            registroGuardias.agregar(dni, g);
+            Armado nuevo = UtilesMain.guardiaArm();
+            registroGuardias.agregar(nuevo.getDni(), nuevo);
             System.out.println("Guardia comun agregado con exito");
-
         }catch (Exception e){
             System.out.println("Error al agregar guardia armado" + e.getMessage());
         }
     }
 
     public void agregarGuardiaCapacitadoTaser (){
-        Scanner sc = new Scanner(System.in);
 
         try{
-            System.out.println("Nombre: ");
-            String nombre = sc.nextLine();
-            System.out.println("Apellido: ");
-            String apellido = sc.nextLine();
-            System.out.println("DNI: ");
-            String dni = sc.nextLine();
-            System.out.println("Edad: ");
-            int edad = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Legajo: ");
-            int legajo = sc.nextInt();
-            sc.nextLine();
-            System.out.println("Fecha de nacimiento (yyyy/MM/dd): ");
-            LocalDate fechaNacimiento = LocalDate.parse(sc.nextLine());
-            System.out.println("Turno (MANIANA/TARDE/NOCHE: ");
-            Turno turno = Turno.valueOf(sc.nextLine().toUpperCase());
-            System.out.println("Numero de celda asignada: ");
-            int numCeldas = sc.nextInt();
-            sc.nextLine();
-            System.out.println("¿Esta en servicio? (true/false): ");
-            boolean enServicio = sc.nextBoolean();
-            sc.nextLine();
-            System.out.println("Rango (OFICIAL/COMISARIO_GENERAL/COMISARIO_MAYOR/JEFE_DE_SEGURIDAD/DIRECTOR_GENERAL");
-            Rango rango = Rango.valueOf(sc.nextLine().toUpperCase());
-            System.out.println("¿Tiene Taser? (true/false): ");
-            boolean taser = sc.nextBoolean();
-            sc.nextLine();
-
-            Guardia g = new CapacitadoTaser(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCeldas, enServicio, rango, LocalDate.now(), taser);
-            registroGuardias.agregar(dni, g);
+            CapacitadoTaser nuevo = UtilesMain.agregarCT();
+            registroGuardias.agregar(nuevo.getDni(), nuevo);
             System.out.println("Guardia comun agregado con exito");
-
         }catch (Exception e){
             System.out.println("Error al agregar guardia capacitado taser" + e.getMessage());
         }
