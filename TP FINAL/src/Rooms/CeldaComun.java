@@ -71,11 +71,11 @@ public class CeldaComun extends Celda {
 
     //deserializar
     public static CeldaComun fromJSON(JSONObject obj) {
-        int numero = obj.getInt("numeroDeCelda");
+        int numero = obj.getInt("numeroCelda");
         int capacidad = obj.getInt("capacidad");
         CeldaComun celda = new CeldaComun(numero, capacidad);
 
-        celda.setUltimaInspeccion(LocalDateTime.parse(obj.getString("ultimaInspeccion")));
+        celda.setUltimaInspeccion(LocalDate.parse(obj.getString("ultimaInspeccion")));
         celda.setLleno(); // si en el JSON viene lleno, ajustamos
 
         celda.hasTv = obj.getBoolean("hasTv"); // directamente
@@ -99,8 +99,9 @@ public class CeldaComun extends Celda {
     //serializar
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON(); // campos comunes de Celda
-        obj.put("tipo", "CeldaComun");
+        obj.put("tipo", "comun");
         obj.put("hasTv", hasTv);
+        obj.put("ultimaInspeccion", getUltimaInspeccion());
 
         JSONArray arrPresos = new JSONArray();
         for (Prisionero p : presos) {

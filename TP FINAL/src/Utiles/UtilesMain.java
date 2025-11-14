@@ -183,4 +183,11 @@ public class UtilesMain {
         return dias;
     }
 
+    public static String dni(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el DNI del prisionero: ");
+        String DNI = sc.nextLine();
+        return DNI;
+    }
+
 }

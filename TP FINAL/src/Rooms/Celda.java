@@ -16,7 +16,7 @@ public abstract class Celda implements Cuarentena {
     private int numeroDeCelda;
     private int capacidad;
     private Guardia guardiaAsignado;
-    private LocalDateTime ultimaInspeccion;
+    private LocalDate ultimaInspeccion;
 
 
     /// Getters and setters
@@ -30,7 +30,7 @@ public abstract class Celda implements Cuarentena {
 
     public String getUltimaInspeccion() {return ultimaInspeccion.toString();}
 
-    public void setUltimaInspeccion(LocalDateTime ultimaInspeccion) {this.ultimaInspeccion = ultimaInspeccion;}
+    public void setUltimaInspeccion(LocalDate ultimaInspeccion) {this.ultimaInspeccion = ultimaInspeccion;}
 
     public boolean getFlag(){return flag;}
 
@@ -67,7 +67,7 @@ public abstract class Celda implements Cuarentena {
     //serializacion
     public JSONObject toJSON() {
         JSONObject obj = new JSONObject();
-        obj.put("numeroDeCelda", numeroDeCelda);
+        obj.put("numeroCelda", numeroDeCelda);
         obj.put("capacidad", capacidad);
         obj.put("lleno", lleno);
         obj.put("ultimaInspeccion", ultimaInspeccion != null ? ultimaInspeccion.toString() : "");

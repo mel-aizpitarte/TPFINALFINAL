@@ -138,6 +138,8 @@ public class Prisionero extends Persona {
         int edad = obj.getInt("edad");
         LocalDate fechaNacimiento = LocalDate.parse(obj.getString("fechaNacimiento"));
 
+
+
         // Datos del prisionero
         LocalDate fechaIngreso = LocalDate.parse(obj.getString("fechaIngreso"));
         int condena = obj.getInt("condenaEnMeses");
@@ -145,7 +147,7 @@ public class Prisionero extends Persona {
         Seguridad nivelSeg = Seguridad.valueOf(obj.getString("seguridad"));
         CrimenCometido crimen = CrimenCometido.valueOf(obj.getString("crimenCometido"));
 
-        int numeroCelda = obj.getInt("numeroCelda");
+        int numeroCelda = obj.getInt("celdaAsignada");
 
 
         Prisionero p = new Prisionero(

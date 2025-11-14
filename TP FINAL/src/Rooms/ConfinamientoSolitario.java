@@ -5,6 +5,7 @@ import Interfaces.Cuarentena;
 import Prisoners.Prisionero;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class ConfinamientoSolitario extends Celda{
@@ -56,19 +57,18 @@ public class ConfinamientoSolitario extends Celda{
 
     //deserializar
     public static ConfinamientoSolitario fromJSON(JSONObject obj) {
-        int numero = obj.getInt("numeroDeCelda");
+        int numero = obj.getInt("numeroCelda");
         int capacidad = obj.getInt("capacidad");
         ConfinamientoSolitario celda = new ConfinamientoSolitario(numero, capacidad);
 
-        celda.setUltimaInspeccion(LocalDateTime.parse(obj.getString("ultimaInspeccion")));
+        celda.setUltimaInspeccion(LocalDate.parse(obj.getString("ultimaInspeccion")));
         celda.setLleno();
 
-        Prisionero p = Prisionero.fromJSON(obj.getJSONObject("prisonero"));
-        try {
-            celda.agregarPrisonero(p, obj.getInt("diasDeAislamiento"));
-        } catch (AccionInvalidaEx e) {
-            e.printStackTrace();
-        }
+        if (obj.has("prisionero") && obj.getJSONObject("prisionero").length() > 0) {
+            Prisionero p = Prisionero.fromJSON(obj.getJSONObject("prisionero"));
+            try {
+                celda.agregarPrisonero(p, obj.getInt("diasDeAislamiento"));
+            } catch (AccionInvalidaEx e) { e.printStackTrace(); } }
 
         return celda;
     }
@@ -81,8 +81,9 @@ public class ConfinamientoSolitario extends Celda{
     //serializar
     public JSONObject toJSON() {
         JSONObject obj = super.toJSON(); // campos comunes de Celda
-        obj.put("tipo", "ConfinamientoSolitario");
+        obj.put("tipo", "solitario");
         obj.put("diasDeAislamiento", diasDeAislamiento);
+        obj.put("ultimaInspeccion", getUltimaInspeccion());
 
         if (prisonero != null) {
             obj.put("prisonero", prisonero.toJSON());

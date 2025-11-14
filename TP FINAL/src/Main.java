@@ -8,7 +8,7 @@ public class Main {
         Sistema sistema = new Sistema();
 
        try{
-           sistema.cargarDatos("archivos.json");
+           sistema.cargarDatos("archivos");
        } catch (Exception e) {
            System.out.println("Error" + e.getMessage());
        }
@@ -133,6 +133,12 @@ public class Main {
                            break;
                        case 6:
                            System.out.println(sistema.extenderAislamiento());
+                           break;
+                       case 7:
+                           System.out.println(sistema.removerPrisionero());
+                           break;
+                       case 8:
+                           System.out.println(sistema.finalizarAislamiento());
                            break;
                        default:
 

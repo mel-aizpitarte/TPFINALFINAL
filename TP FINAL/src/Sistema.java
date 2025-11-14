@@ -8,8 +8,10 @@ import Rooms.ConfinamientoSolitario;
 import Utiles.JSONUtiles;
 import Utiles.UtilesMain;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -394,7 +396,7 @@ public class Sistema {
 
         for (int i = 0; i < listaCeldas.size(); i++) {
             if (listaCeldas.get(i).getNumeroDeCelda() == numCelda) {
-                listaCeldas.get(i).setUltimaInspeccion(LocalDateTime.now());
+                listaCeldas.get(i).setUltimaInspeccion(LocalDate.now());
                 return "Se ha logrado asentar que hoy se inspecciono la celda";
             }
         }
@@ -432,6 +434,28 @@ public class Sistema {
         }
 
         return "No se encontro la celda o no es confinamiento solitario";
+    }
+
+    public String removerPrisionero(){
+        int numCelda=UtilesMain.numCelda();
+        String DNI=UtilesMain.dni();
+        for (int i = 0; i < listaCeldas.size(); i++) {
+            if(listaCeldas.get(i).getNumeroDeCelda() == numCelda && listaCeldas.get(i) instanceof CeldaComun){
+                return ((CeldaComun)listaCeldas.get(i)).removerPresoDNI(DNI);
+            }
+        }
+        return "No se encontro la celda o no es Celda Comun";
+    }
+
+    public String finalizarAislamiento(){
+        int numCelda=UtilesMain.numCelda();
+
+        for (int i = 0; i < listaCeldas.size(); i++) {
+            if(listaCeldas.get(i).getNumeroDeCelda() == numCelda && listaCeldas.get(i) instanceof ConfinamientoSolitario){
+                return ((ConfinamientoSolitario)listaCeldas.get(i)).terminarAislamiento();
+            }
+        }
+        return "No se encontro celda o no es confinamiento solitario";
     }
 
     //JSON metodos
@@ -485,68 +509,74 @@ public class Sistema {
 
     //deserializar
     public void cargarDatos (String archivo){
-        String contenido = JSONUtiles.downloadJSON(archivo);
-        if (contenido.isEmpty()){
-            return;
-        }
-
-        JSONObject obj = new JSONObject(contenido);
-
-        //Guardias
-        JSONArray arrGuardias = obj.getJSONArray("guardias");
-        for (int i = 0; i < arrGuardias.length(); i++){
-            JSONObject Gobj = arrGuardias.getJSONObject(i);
-            String tipo = Gobj.getString("tipo");
-
-            Guardia g = null;
-
-            switch (tipo){
-                case "Comun":
-                    g = Comun.fromJSON(Gobj);
-                    break;
-                case "Armado":
-                    g= Armado.fromJSON(Gobj);
-                    break;
-                case "CapacitadoTaser":
-                    g =  CapacitadoTaser.fromJSON(Gobj);
-                    break;
-                default:
-                    System.out.println("Tipo de guardia desconocido: "+ tipo);
+        try {
+            String contenido = JSONUtiles.downloadJSON(archivo);
+            if (contenido.isEmpty()) {
+                return;
             }
 
-            if(g != null){
-                registroGuardias.agregar(g.getDni(), g);
+            JSONObject obj = new JSONObject(contenido);
+
+            //Guardias
+            JSONArray arrGuardias = obj.getJSONArray("guardias");
+            for (int i = 0; i < arrGuardias.length(); i++) {
+                JSONObject Gobj = arrGuardias.getJSONObject(i);
+                String tipo = Gobj.getString("tipo");
+
+                Guardia g = null;
+
+                switch (tipo) {
+                    case "Comun":
+                        g = Comun.fromJSON(Gobj);
+                        break;
+                    case "Armado":
+                        g = Armado.fromJSON(Gobj);
+                        break;
+                    case "CapacitadoTaser":
+                        g = CapacitadoTaser.fromJSON(Gobj);
+                        break;
+                    default:
+                        System.out.println("Tipo de guardia desconocido: " + tipo);
+                }
+
+                if (g != null) {
+                    registroGuardias.agregar(g.getDni(), g);
+                }
             }
-        }
 
-        //Prisioneros
-        JSONArray arrPrisioneros = obj.getJSONArray("prisioneros");
-        for (int i = 0; i < arrPrisioneros.length(); i++){
-            JSONObject Pobj = arrPrisioneros.getJSONObject(i);
-            Prisionero p = Prisionero.fromJSON(Pobj);
-            registroPrisioneros.agregar(p.getDni(), p);
-        }
-
-        //celdas
-        JSONArray arrCeldas = obj.getJSONArray("celdas");
-        for (int i = 0; i < arrCeldas.length(); i++) {
-            JSONObject Cobj = arrCeldas.getJSONObject(i);
-            String tipo = Cobj.getString("tipo");
-            Celda c = null;
-
-            switch (tipo) {
-                case "CeldaComun":
-                    c = CeldaComun.fromJSON(Cobj);
-                    break;
-                case "ConfinamientoSolitario": c =
-                        ConfinamientoSolitario.fromJSON(Cobj);
-                break;
-                default: System.out.println("Tipo de celda desconocido: " + tipo);
+            //Prisioneros
+            JSONArray arrPrisioneros = obj.getJSONArray("prisioneros");
+            for (int i = 0; i < arrPrisioneros.length(); i++) {
+                JSONObject Pobj = arrPrisioneros.getJSONObject(i);
+                Prisionero p = Prisionero.fromJSON(Pobj);
+                registroPrisioneros.agregar(p.getDni(), p);
             }
 
-            if (c != null){
-                listaCeldas.add(c);
+            //celdas
+            JSONArray arrCeldas = obj.getJSONArray("celdas");
+            for (int i = 0; i < arrCeldas.length(); i++) {
+                JSONObject Cobj = arrCeldas.getJSONObject(i);
+                String tipo = Cobj.getString("tipo");
+                Celda c = null;
+
+                switch (tipo) {
+                    case "comun":
+                        c = CeldaComun.fromJSON(Cobj);
+                        break;
+                    case "solitario":
+                        c = ConfinamientoSolitario.fromJSON(Cobj);
+                        break;
+                    default:
+                        System.out.println("Tipo de celda desconocido: " + tipo);
+                        break;
+                }
+
+                if (c != null) {
+                    listaCeldas.add(c);
+                }
             }
+        }catch(JSONException e){
+            e.printStackTrace();
         }
     }
 
@@ -577,17 +607,13 @@ public class Sistema {
     }
 
     public  void menuCeldas (){
-        System.out.println("1. Crear celda comun");
+        System.out.println("1.Crear celda comun");
         System.out.println("2.Crear celda de confinamiento solitario");
         System.out.println("3.Mostrar todas las celdas");
-        System.out.println("4.Asignar guardia a una celda");
-        System.out.println("5.Asignar prisionero a una celda");
-        System.out.println("6.Eliminar prisionero de una celda");
-        System.out.println("7.Extender dias de aislamiento(confinamiento)");
+        System.out.println("4.Cambiar Ultima Inspeccion");
+        System.out.println("5.Asignar TV");
+        System.out.println("7.Remover prisionero de celda comun");
         System.out.println("8.Terminar aislamiento(liberar celda solitaria)");
-        System.out.println("9.Registrar inspeccion de celda");
-        System.out.println("10.Mostrar celdas ocupadas");
-        System.out.println("11.Mostrar celdas vacias");
         System.out.println("Elige una opcion: ");
     }
 

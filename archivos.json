@@ -44,17 +44,15 @@
       "tieneTaser": true
     }
   ],
-
   "prisioneros": [
     {
-      "tipo": "Prisionero",
       "nombre": "Juan",
       "apellido": "Pérez",
       "dni": "12345678",
       "edad": 30,
       "fechaNacimiento": "1985-05-20",
       "fechaIngreso": "2024-02-10",
-      "condenaEnmeses": 24,
+      "condenaEnMeses": 24,
       "visitasEsteMes": 2,
       "limiteVisitas": 5,
       "celdaAsignada": 12,
@@ -62,14 +60,13 @@
       "seguridad": "MEDIA"
     },
     {
-      "tipo": "Prisionero",
       "nombre": "Lucía",
       "apellido": "Ramírez",
       "dni": "98765432",
       "edad": 27,
       "fechaNacimiento": "1997-08-15",
       "fechaIngreso": "2023-11-03",
-      "condenaEnmeses": 36,
+      "condenaEnMeses": 36,
       "visitasEsteMes": 1,
       "limiteVisitas": 5,
       "celdaAsignada": 7,
@@ -79,30 +76,40 @@
   ],
   "celdas": [
     {
-      "id": 1,
+      "numeroCelda": 1,
       "tipo": "comun",
       "capacidad": 4,
-      "prisioneros": [101, 102]
+      "prisioneros": [101, 102],
+      "ultimaInspeccion": "2025-02-02",
+      "hasTv": false,
+      "presos": []
     },
     {
-      "id": 2,
+      "numeroCelda": 2,
       "tipo": "comun",
       "capacidad": 6,
-      "prisioneros": []
+      "prisioneros": [],
+      "ultimaInspeccion": "2025-02-02",
+      "hasTv": false,
+      "presos": []
     },
     {
-      "id": 3,
+      "numeroCelda": 3,
       "tipo": "solitario",
       "capacidad": 1,
       "prisioneros": [103],
-      "diasDeAislamiento": 10
+      "diasDeAislamiento": 10,
+      "ultimaInspeccion": "2025-02-02",
+      "prisionero": {}
     },
     {
-      "id": 4,
+      "numeroCelda": 4,
       "tipo": "solitario",
       "capacidad": 1,
       "prisioneros": [],
-      "diasDeAislamiento": 1
+      "diasDeAislamiento": 1,
+      "ultimaInspeccion": "2025-02-02",
+      "prisionero": {}
     }
   ]
 }
