@@ -3,9 +3,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-       Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-       Sistema sistema = new Sistema();
+        Sistema sistema = new Sistema();
+
+       try{
+           sistema.cargarDatos("archivos.json");
+       } catch (Exception e) {
+           System.out.println("Error" + e.getMessage());
+       }
+
 
        int opcion;
 
@@ -17,7 +24,6 @@ public class Main {
            System.out.println("1. Configuracion de Guardias");
            System.out.println("2. Configuracion de Prisioneros");
            System.out.println("3.Configuracion de Celdas");
-           System.out.println("4.Configuracion de Archivos");
            System.out.println("0. Salir");
            System.out.println("Seleccione una opcion: ");
 
@@ -27,7 +33,7 @@ public class Main {
            switch (opcion){
                case 1:
                    System.out.println("----------Configuracion de Guardias----------");
-                   Guardia();
+                   sistema.menuGuardia();
                    int opcion1 = sc.nextInt();
                    sc.nextLine();
 
@@ -64,9 +70,10 @@ public class Main {
                            sistema.asignarOactualizarTaser();
                            break;
                    }
+                   break;
                case 2:
                    System.out.println("----------Configuracion de Prisioneros----------");
-                   Prisioneros();
+                   sistema.menuPrisioneros();
 
                    int opcion2 = sc.nextInt();
                    sc.nextLine();
@@ -97,24 +104,12 @@ public class Main {
                    break;
                case 3:
                    System.out.println("----------Configuracion de Celdas----------");
-                   Celdas();
+                   sistema.menuCeldas();
 
                    int opcion3 = sc.nextInt();
                    sc.nextLine();
 
                    switch (opcion3){
-                       case 1:
-                           break;
-                   }
-                   break;
-               case 4:
-                   System.out.println("----------Configuracion de Archivos----------");
-                   Archivos();
-
-                   int opcion4 = sc.nextInt();
-                   sc.nextLine();
-
-                   switch (opcion4){
                        case 1:
                            break;
                    }
@@ -132,52 +127,13 @@ public class Main {
 
        }while(opcion != 0);
 
+       try{
+           sistema.guardarTodo();
+       }catch (Exception e){
+           System.out.println("Error "+ e.getMessage());
+       }
 
     }
 
-    public static void Guardia (){
-        System.out.println("1. Agregar guardia comun");
-        System.out.println("2. Agregar guardia armado");
-        System.out.println("3. Agregar guardia capacitado en Taser");
-        System.out.println("4. Mostrar todos los guardias");
-        System.out.println("5. Mostrar guardias en servicio");
-        System.out.println("6. Mostrar guardias fuera de servicio");
-        System.out.println("7. Cambiar turno de un guardia");
-        System.out.println("8.Asignar o cambiar arma a un guardia armado");
-        System.out.println("9.Asignar gas pimienta a un guardia comun");
-        System.out.println("10.Asignar/actualizar Taser a un guardia capacitado");
-        System.out.println("Elige una opcion: ");
-    }
 
-    public static void Prisioneros (){
-        System.out.println("1. Agregar prisionero");
-        System.out.println("2. Mostrar todos los prisioneros");
-        System.out.println("3. Asignar celda a prisionero");
-        System.out.println("4. Solicitar visita");
-        System.out.println("5. Registrar visita");
-        System.out.println("6. Mostrar visitas del prisionero");
-        System.out.println("7. Ver tiempo restante de condena");
-        System.out.println("Elige una opcion: ");
-    }
-
-    public static void Celdas (){
-        System.out.println("1. Crear celda comun");
-        System.out.println("2.Crear celda de confinamiento solitario");
-        System.out.println("3.Mostrar todas las celdas");
-        System.out.println("4.Asignar guardia a una celda");
-        System.out.println("5.Asignar prisionero a una celda");
-        System.out.println("6.Eliminar prisionero de una celda");
-        System.out.println("7.Extender dias de aislamiento(confinamiento)");
-        System.out.println("8.Terminar aislamiento(liberar celda solitaria)");
-        System.out.println("9.Registrar inspeccion de celda");
-        System.out.println("10.Mostrar celdas ocupadas");
-        System.out.println("11.Mostrar celdas vacias");
-        System.out.println("Elige una opcion: ");
-    }
-
-    public static void Archivos (){
-        System.out.println("Cargar datos en JSON");
-        System.out.println("Guardar datos en JSON");
-        System.out.println("Elige una opcion: ");
-    }
 }

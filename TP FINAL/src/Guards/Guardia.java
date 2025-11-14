@@ -2,6 +2,7 @@ package Guards;
 
 import Excepciones.AccionInvalidaEx;
 import Persona.Persona;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 
@@ -76,15 +77,40 @@ public abstract class Guardia extends Persona {
         }
     }
 
+    //JSON
+    //Serializar
+    public JSONObject toJSON(){
+        JSONObject obj = new JSONObject();
+
+        obj.put("tipo" , "Guardia");
+
+        //Datos de persona
+        obj.put("nombre", getNombre());
+        obj.put("apellido", getApellido());
+        obj.put("dni", getDni());
+
+        //Datos de guardia
+        obj.put("legajo", getLegajo());
+        obj.put("rango", getRango().toString());
+        obj.put("turno", getTurno().toString());
+        obj.put("numCelda", getNumCelda());
+        obj.put("enServicio", isEnServicio());
+        return obj;
+    }
+
     @Override
     public String toString() {
-        return "Guardia{" +
-                "legajo=" + legajo +
-                ", turno=" + turno +
-                ", numCelda=" + numCelda +
-                ", enServicio=" + enServicio +
-                ", rango=" + rango +
-                "} " + super.toString();
+        return "\n--- GUARDIA (" + getClass().getSimpleName() + ") ---" +
+                "\nNombre: " + getNombre() +
+                "\nApellido: " + getApellido() +
+                "\nDNI: " + getDni() +
+                "\nEdad: " + getEdad() +
+                "\nFecha nacimiento: " + getFechaNacimiento() +
+                "\nLegajo: " + legajo +
+                "\nRango: " + rango +
+                "\nTurno: " + turno +
+                "\nN° Celda: " + numCelda +
+                "\nEn servicio: " + enServicio;
     }
 }
 

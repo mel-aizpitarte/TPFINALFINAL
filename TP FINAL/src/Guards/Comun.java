@@ -2,6 +2,7 @@ package Guards;
 
 import Excepciones.AccionInvalidaEx;
 import Rooms.Celda;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 
@@ -37,10 +38,36 @@ public class Comun extends Guardia {
         }
     }
 
+    //deserializacion
+    public static Comun fromJSON(JSONObject obj){
+        return  new Comun(
+          obj.getString("nombre"),
+          obj.getString("apellido"),
+          obj.getString("dni"),
+          obj.getInt("edad"),
+          LocalDate.parse(obj.getString("fechaNacimiento")),
+          obj.getInt("legajo"),
+          Turno.valueOf(obj.getString("turno")),
+          obj.getInt("numCelda"),
+          obj.getBoolean("enServicio"),
+          Rango.valueOf(obj.getString("rango")),
+          obj.getBoolean("tieneGasPimienta")
+        );
+    }
+
+    //serializacion
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj = super.toJSON();
+        obj.put("tipo", "Comun");
+        obj.put("tieneGasPimienta", isTieneGasPimienta());
+        return obj;
+    }
+
     @Override
     public String toString() {
-        return "Guards.Comun{" +
-                "tieneGasPimienta=" + tieneGasPimienta +
-                "} " + super.toString();
+        return super.toString() +
+                "\nTiene gas pimienta: " + tieneGasPimienta +
+                "\n----------------------\n";
     }
 }
