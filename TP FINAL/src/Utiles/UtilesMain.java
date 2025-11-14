@@ -162,6 +162,13 @@ public class UtilesMain {
         return numCeldas;
     }
 
+    public static int numMostrar(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese el numero de celda a mostrar: ");
+        int numCeldas = sc.nextInt();
+        return numCeldas;
+    }
+
     public static int capacidad(){
         Scanner sc = new Scanner(System.in);
         System.out.println("Ingrese la capacidad de la celda: ");

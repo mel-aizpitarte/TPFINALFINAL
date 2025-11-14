@@ -370,7 +370,7 @@ public class Sistema {
 
     public String mostrarCelda(){
 
-        int numCelda=UtilesMain.numCelda();
+        int numCelda=UtilesMain.numMostrar();
 
         if(!listaCeldas.isEmpty()){
             for (Celda listaCelda : listaCeldas) {
