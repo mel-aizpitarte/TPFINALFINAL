@@ -334,7 +334,10 @@ public class Sistema {
     }
 
     /// Celdas metodos
-    public String cargarNuevaCeldaComun(int numeroDeCelda, int capacidad) {
+    public String cargarNuevaCeldaComun() {
+
+        int numeroDeCelda=UtilesMain.numCelda();
+        int capacidad=UtilesMain.capacidad();
 
         for (int i = 0; i < listaCeldas.size(); i++) {
             if (listaCeldas.get(i).getNumeroDeCelda() == numeroDeCelda) {
@@ -346,7 +349,11 @@ public class Sistema {
         return "Celda cargada correctamente";
     }
 
-    public String cargarNuevaCeldaConfinamientoSolitario(int numeroDeCelda, int capacidad) {
+    public String cargarNuevaCeldaConfinamientoSolitario() {
+
+        int numeroDeCelda=UtilesMain.numCelda();
+        int capacidad=UtilesMain.capacidad();
+
         for (int i = 0; i < listaCeldas.size(); i++) {
             if (listaCeldas.get(i).getNumeroDeCelda() == numeroDeCelda) {
                 return "Esa celda ya existe y esta cargada al sistema";
@@ -357,7 +364,10 @@ public class Sistema {
         return "Celda cargada correctamente";
     }
 
-    public String mostrarCelda(int numCelda){
+    public String mostrarCelda(){
+
+        int numCelda=UtilesMain.numCelda();
+
         if(!listaCeldas.isEmpty()){
             for (Celda listaCelda : listaCeldas) {
                 if (listaCelda.getNumeroDeCelda() == numCelda) {
@@ -374,7 +384,9 @@ public class Sistema {
         }
     }
 
-    public String cambiarUltimaInspeccion(int numCelda){
+    public String cambiarUltimaInspeccion(){
+
+        int numCelda=UtilesMain.numCelda();
 
         for (int i = 0; i < listaCeldas.size(); i++) {
             if (listaCeldas.get(i).getNumeroDeCelda() == numCelda) {
@@ -385,7 +397,10 @@ public class Sistema {
         return "No se encuentra la celda ingresada";
     }
 
-    public String asignarTV(int numCelda){
+    public String asignarTV(){
+
+        int numCelda=UtilesMain.numCelda();
+
         for (int i = 0; i < listaCeldas.size(); i++) {
             if (listaCeldas.get(i).getNumeroDeCelda() == numCelda && listaCeldas.get(i) instanceof CeldaComun){
                 if(!((CeldaComun)listaCeldas.get(i)).getTv()){
@@ -398,6 +413,21 @@ public class Sistema {
             }
         }
         return "Celda no encontrada, o no es una celda comun, intentar denuevo";
+    }
+
+    public String extenderAislamiento(){
+
+        int numCelda=UtilesMain.numCelda();
+        int dias=UtilesMain.dias();
+
+        for (int i = 0; i < listaCeldas.size(); i++) {
+            if (listaCeldas.get(i).getNumeroDeCelda() == numCelda && listaCeldas.get(i) instanceof ConfinamientoSolitario) {
+                ((ConfinamientoSolitario)listaCeldas.get(i)).extenderDiasDeAislamiento(dias);
+                return "Se han extendido los dias exitosamente";
+            }
+        }
+
+        return "No se encontro la celda o no es confinamiento solitario";
     }
 
     //JSON metodos
