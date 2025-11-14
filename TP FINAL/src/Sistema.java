@@ -5,7 +5,10 @@ import Prisoners.Prisionero;
 import Rooms.Celda;
 import Rooms.CeldaComun;
 import Rooms.ConfinamientoSolitario;
+import Utiles.JSONUtiles;
 import Utiles.UtilesMain;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -354,8 +357,6 @@ public class Sistema {
         return "Celda cargada correctamente";
     }
 
-
-
     public String mostrarCelda(int numCelda){
         if(!listaCeldas.isEmpty()){
             for (Celda listaCelda : listaCeldas) {
@@ -400,5 +401,125 @@ public class Sistema {
         return "Celda no encontrada, o no es una celda comun, intentar denuevo";
     }
 
+    //JSON metodos
+    //serializar
+    public void guardarGuardias (){
+        try{
+            JSONArray arrGuardias = new JSONArray();
+            for (Guardia g :registroGuardias.getLista().values()){
+                arrGuardias.put(g.toJSON());
+            }
+            JSONUtiles.uploadJSON(arrGuardias, "guardias");
+            System.out.println("Guardias guardados correctamente en JSON");
+        } catch (Exception e){
+            System.out.println("Error al guardar los guardias: " + e.getMessage());
+        }
+    }
+
+    public void guardarPrisioneros (){
+        try{
+            JSONArray arrPrisioneros = new JSONArray();
+            for (Prisionero p :registroPrisioneros.getLista().values()){
+                arrPrisioneros.put(p.toJSON());
+            }
+            JSONUtiles.uploadJSON(arrPrisioneros, "prisioneros");
+            System.out.println("Prisioneros guardados correctamente en JSON");
+        } catch (Exception e){
+            System.out.println("Error al guardar los prisioneros: " + e.getMessage());
+        }
+    }
+
+    public void guardarTodo (){
+        guardarGuardias();
+        guardarPrisioneros();
+        //guardar celdas
+    }
+
+
+    //deserializar
+    public void cargarDatos (String archivo){
+        String contenido = JSONUtiles.downloadJSON(archivo);
+        if (contenido.isEmpty()){
+            return;
+        }
+
+        JSONObject obj = new JSONObject(contenido);
+
+        //Guardias
+        JSONArray arrGuardias = obj.getJSONArray("guardias");
+        for (int i = 0; i < arrGuardias.length(); i++){
+            JSONObject Gobj = arrGuardias.getJSONObject(i);
+            String tipo = Gobj.getString("tipo");
+
+            Guardia g = null;
+
+            switch (tipo){
+                case "Comun":
+                    g = Comun.fromJSON(Gobj);
+                    break;
+                case "Armado":
+                    g= Armado.fromJSON(Gobj);
+                    break;
+                case "CapacitadoTaser":
+                    g =  CapacitadoTaser.fromJSON(Gobj);
+                    break;
+                default:
+                    System.out.println("Tipo de guardia desconocido: "+ tipo);
+            }
+
+            if(g != null){
+                registroGuardias.agregar(g.getDni(), g);
+            }
+        }
+
+        //Prisioneros
+        JSONArray arrPrisioneros = obj.getJSONArray("prisioneros");
+        for (int i = 0; i < arrPrisioneros.length(); i++){
+            JSONObject Pobj = arrPrisioneros.getJSONObject(i);
+            Prisionero p = Prisionero.fromJSON(Pobj);
+            registroPrisioneros.agregar(p.getDni(), p);
+        }
+}
+
+//menus
+   public void menuGuardia (){
+    System.out.println("1. Agregar guardia comun");
+    System.out.println("2. Agregar guardia armado");
+    System.out.println("3. Agregar guardia capacitado en Taser");
+    System.out.println("4. Mostrar todos los guardias");
+    System.out.println("5. Mostrar guardias en servicio");
+    System.out.println("6. Mostrar guardias fuera de servicio");
+    System.out.println("7. Cambiar turno de un guardia");
+    System.out.println("8.Asignar o cambiar arma a un guardia armado");
+    System.out.println("9.Asignar gas pimienta a un guardia comun");
+    System.out.println("10.Asignar/actualizar Taser a un guardia capacitado");
+    System.out.println("Elige una opcion: ");
+   }
+
+    public void menuPrisioneros (){
+        System.out.println("1. Agregar prisionero");
+        System.out.println("2. Mostrar todos los prisioneros");
+        System.out.println("3. Asignar celda a prisionero");
+        System.out.println("4. Solicitar visita");
+        System.out.println("5. Registrar visita");
+        System.out.println("6. Mostrar visitas del prisionero");
+        System.out.println("7. Ver tiempo restante de condena");
+        System.out.println("Elige una opcion: ");
+    }
+
+    public  void menuCeldas (){
+        System.out.println("1. Crear celda comun");
+        System.out.println("2.Crear celda de confinamiento solitario");
+        System.out.println("3.Mostrar todas las celdas");
+        System.out.println("4.Asignar guardia a una celda");
+        System.out.println("5.Asignar prisionero a una celda");
+        System.out.println("6.Eliminar prisionero de una celda");
+        System.out.println("7.Extender dias de aislamiento(confinamiento)");
+        System.out.println("8.Terminar aislamiento(liberar celda solitaria)");
+        System.out.println("9.Registrar inspeccion de celda");
+        System.out.println("10.Mostrar celdas ocupadas");
+        System.out.println("11.Mostrar celdas vacias");
+        System.out.println("Elige una opcion: ");
+    }
 
 }
