@@ -76,22 +76,6 @@ public class Visita {
         System.out.println("Nueva visita registrada. Total: "+ p.getVisitasEsteMes());
     }
 
-    public JSONObject toJSON (){
-        JSONObject obj = new JSONObject();
-
-        obj.put("tipo" , "Visita");
-
-        //Atributos
-        obj.put("id" , getId());
-        obj.put("fecha" , getFecha().toString());
-        obj.put("estaAutorizado" , isEstaAutorizado());
-        obj.put("dniPresoAvisitar" , getDniPresoAvisitar());
-        obj.put("nombreVisitante" , getNombreVisitante());
-        obj.put("legajoGuardia" , getLegajoGuardia());
-        obj.put("cantidadVisitas" , getCantidadVisitas());
-        return obj;
-    }
-
     @Override
     public String toString() {
         return "\nVisita {" +

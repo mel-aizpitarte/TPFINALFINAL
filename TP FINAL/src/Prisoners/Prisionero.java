@@ -3,6 +3,7 @@ package Prisoners;
 import Excepciones.AccionInvalidaEx;
 import Persona.Persona;
 import Rooms.Celda;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -127,6 +128,65 @@ public class Prisionero extends Persona {
         this.visitasEsteMes++;
     }
 
+    //deserializacion
+    public static Prisionero fromJSON(JSONObject obj) {
+
+        // Datos básicos
+        String nombre = obj.getString("nombre");
+        String apellido = obj.getString("apellido");
+        String dni = obj.getString("dni");
+        int edad = obj.getInt("edad");
+        LocalDate fechaNacimiento = LocalDate.parse(obj.getString("fechaNacimiento"));
+
+        // Datos del prisionero
+        LocalDate fechaIngreso = LocalDate.parse(obj.getString("fechaIngreso"));
+        int condena = obj.getInt("condenaEnMeses");
+        int visitas = obj.getInt("visitasEsteMes");
+        Seguridad nivelSeg = Seguridad.valueOf(obj.getString("seguridad"));
+        CrimenCometido crimen = CrimenCometido.valueOf(obj.getString("crimenCometido"));
+
+        int numeroCelda = obj.getInt("numeroCelda");
+
+
+        Prisionero p = new Prisionero(
+                nombre, apellido, dni, edad, fechaNacimiento,
+                fechaIngreso,
+                null,
+                crimen,
+                nivelSeg,
+                condena
+        );
+
+        p.visitasEsteMes = visitas;
+        p.numeroCeldaTemporal = numeroCelda;
+
+        return p;
+    }
+
+    public Integer numeroCeldaTemporal = null;
+
+    //serializacion
+    public JSONObject toJSON() {
+        JSONObject json = new JSONObject();
+
+        json.put("nombre", getNombre());
+        json.put("apellido", getApellido());
+        json.put("dni", getDni());
+        json.put("edad", getEdad());
+        json.put("fechaNacimiento", getFechaNacimiento().toString());
+
+        json.put("fechaIngreso", fechaIngreso.toString());
+        json.put("condenaEnMeses", condenaEnmeses);
+        json.put("visitasEsteMes", visitasEsteMes);
+        json.put("limiteVisitas", LimiteVisitas);
+
+        // Objetos
+        json.put("crimenCometido", crimenCometido.toString());
+        json.put("seguridad", seguridad);
+        json.put("celdaAsignada", celdaAsignada);
+
+        return json;
+    }
 
     @Override
     public String toString() {

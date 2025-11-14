@@ -2,6 +2,7 @@ package Rooms;
 import Guards.*;
 import Interfaces.Cuarentena;
 import Prisoners.Prisionero;
+import org.json.JSONObject;
 
 
 import java.time.LocalDate;
