@@ -374,7 +374,6 @@ public class Sistema {
         }
     }
 
-
     public String cambiarUltimaInspeccion(int numCelda){
 
         for (int i = 0; i < listaCeldas.size(); i++) {
@@ -435,7 +434,6 @@ public class Sistema {
         //guardar celdas
     }
 
-
     //deserializar
     public void cargarDatos (String archivo){
         String contenido = JSONUtiles.downloadJSON(archivo);
@@ -481,8 +479,8 @@ public class Sistema {
         }
 }
 
-//menus
-   public void menuGuardia (){
+   //menus
+    public void menuGuardia (){
     System.out.println("1. Agregar guardia comun");
     System.out.println("2. Agregar guardia armado");
     System.out.println("3. Agregar guardia capacitado en Taser");

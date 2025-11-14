@@ -8,14 +8,9 @@ import java.time.LocalDate;
 public class Armado extends Guardia {
     private Arma arma;
 
-    public Armado(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numCelda, boolean enServicio, Rango rango, Arma arma){
-        if (rango == Rango.OFICIAL) {
-            super(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, Rango.COMISARIO_MAYOR);
-            this.arma = arma;
-        }else{
-            super(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, rango);
-            this.arma = arma;
-        }
+    public Armado(String nombre, String apellido, String dni, int edad, LocalDate fechaNacimiento, int legajo, Turno turno, int numCelda, boolean enServicio, Rango rango, Arma arma) {
+        super(nombre, apellido, dni, edad, fechaNacimiento, legajo, turno, numCelda, enServicio, rango);
+        this.arma = arma;
     }
 
     public Arma getArma() {
