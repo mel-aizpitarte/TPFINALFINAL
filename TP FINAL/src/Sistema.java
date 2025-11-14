@@ -7,6 +7,7 @@ import Rooms.CeldaComun;
 import Rooms.ConfinamientoSolitario;
 import Utiles.UtilesMain;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -370,6 +371,33 @@ public class Sistema {
         }else{
             return "No hay celdas registradas";
         }
+    }
+
+
+    public String cambiarUltimaInspeccion(int numCelda){
+
+        for (int i = 0; i < listaCeldas.size(); i++) {
+            if (listaCeldas.get(i).getNumeroDeCelda() == numCelda) {
+                listaCeldas.get(i).setUltimaInspeccion(LocalDateTime.now());
+                return "Se ha logrado asentar que hoy se inspecciono la celda";
+            }
+        }
+        return "No se encuentra la celda ingresada";
+    }
+
+    public String asignarTV(int numCelda){
+        for (int i = 0; i < listaCeldas.size(); i++) {
+            if (listaCeldas.get(i).getNumeroDeCelda() == numCelda && listaCeldas.get(i) instanceof CeldaComun){
+                if(!((CeldaComun)listaCeldas.get(i)).getTv()){
+                    ((CeldaComun)listaCeldas.get(i)).asignarTv();
+                    return "Se ha asignado tv a esta celda correctamente";
+                }else{
+                    return "Esta celda ya tiene tv";
+                }
+
+            }
+        }
+        return "Celda no encontrada, o no es una celda comun, intentar denuevo";
     }
 
 
