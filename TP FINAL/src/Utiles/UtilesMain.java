@@ -142,7 +142,7 @@ public class UtilesMain {
         System.out.println("Fecha de nacimiento (AAAA-MM-DD):");
         LocalDate nacimiento = LocalDate.parse(sc.nextLine());
 
-        System.out.println("Crimen cometido:");
+        System.out.println("Crimen cometido (ROBO/HOMICIDIO/NARCOTRAFICO/FRAUDE/SECUESTRO/VIOLENCIA_DOMESTICA/CORRUPCION/AGRESION/TENTATIVA_DE_HOMICIDIO OTRO): ");
         CrimenCometido crimen = CrimenCometido.valueOf(sc.nextLine().toUpperCase());
 
         System.out.println("Nivel de seguridad (BAJA/MEDIA/ALTA): ");
