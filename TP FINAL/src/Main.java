@@ -33,7 +33,7 @@ public class Main {
            switch (opcion){
                case 1:
                    System.out.println("----------Configuracion de Guardias----------");
-                   Guardia();
+                   sistema.menuGuardia();
                    int opcion1 = sc.nextInt();
                    sc.nextLine();
 
@@ -73,7 +73,7 @@ public class Main {
                    break;
                case 2:
                    System.out.println("----------Configuracion de Prisioneros----------");
-                   Prisioneros();
+                   sistema.menuPrisioneros();
 
                    int opcion2 = sc.nextInt();
                    sc.nextLine();
@@ -104,7 +104,7 @@ public class Main {
                    break;
                case 3:
                    System.out.println("----------Configuracion de Celdas----------");
-                   Celdas();
+                   sistema.menuCeldas();
 
                    int opcion3 = sc.nextInt();
                    sc.nextLine();
@@ -135,44 +135,5 @@ public class Main {
 
     }
 
-    public static void Guardia (){
-        System.out.println("1. Agregar guardia comun");
-        System.out.println("2. Agregar guardia armado");
-        System.out.println("3. Agregar guardia capacitado en Taser");
-        System.out.println("4. Mostrar todos los guardias");
-        System.out.println("5. Mostrar guardias en servicio");
-        System.out.println("6. Mostrar guardias fuera de servicio");
-        System.out.println("7. Cambiar turno de un guardia");
-        System.out.println("8.Asignar o cambiar arma a un guardia armado");
-        System.out.println("9.Asignar gas pimienta a un guardia comun");
-        System.out.println("10.Asignar/actualizar Taser a un guardia capacitado");
-        System.out.println("Elige una opcion: ");
-    }
-
-    public static void Prisioneros (){
-        System.out.println("1. Agregar prisionero");
-        System.out.println("2. Mostrar todos los prisioneros");
-        System.out.println("3. Asignar celda a prisionero");
-        System.out.println("4. Solicitar visita");
-        System.out.println("5. Registrar visita");
-        System.out.println("6. Mostrar visitas del prisionero");
-        System.out.println("7. Ver tiempo restante de condena");
-        System.out.println("Elige una opcion: ");
-    }
-
-    public static void Celdas (){
-        System.out.println("1. Crear celda comun");
-        System.out.println("2.Crear celda de confinamiento solitario");
-        System.out.println("3.Mostrar todas las celdas");
-        System.out.println("4.Asignar guardia a una celda");
-        System.out.println("5.Asignar prisionero a una celda");
-        System.out.println("6.Eliminar prisionero de una celda");
-        System.out.println("7.Extender dias de aislamiento(confinamiento)");
-        System.out.println("8.Terminar aislamiento(liberar celda solitaria)");
-        System.out.println("9.Registrar inspeccion de celda");
-        System.out.println("10.Mostrar celdas ocupadas");
-        System.out.println("11.Mostrar celdas vacias");
-        System.out.println("Elige una opcion: ");
-    }
 
 }
