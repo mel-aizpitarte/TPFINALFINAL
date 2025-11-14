@@ -69,6 +69,9 @@ public class Main {
                        case 10:
                            sistema.asignarOactualizarTaser();
                            break;
+                       default:
+
+                           break;
                    }
                    break;
                case 2:
@@ -100,6 +103,9 @@ public class Main {
                        case 7:
                            sistema.mostrarTiempoRestante();
                            break;
+                       default:
+
+                           break;
                    }
                    break;
                case 3:
@@ -111,6 +117,25 @@ public class Main {
 
                    switch (opcion3){
                        case 1:
+                           System.out.println(sistema.cargarNuevaCeldaComun());
+                           break;
+                       case 2:
+                           System.out.println(sistema.cargarNuevaCeldaConfinamientoSolitario());
+                           break;
+                       case 3:
+                           System.out.println(sistema.mostrarCelda());
+                           break;
+                       case 4:
+                           System.out.println(sistema.cambiarUltimaInspeccion());
+                           break;
+                       case 5:
+                           System.out.println(sistema.asignarTV());
+                           break;
+                       case 6:
+                           System.out.println(sistema.extenderAislamiento());
+                           break;
+                       default:
+
                            break;
                    }
                    break;

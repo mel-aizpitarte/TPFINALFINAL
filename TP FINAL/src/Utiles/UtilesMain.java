@@ -162,4 +162,18 @@ public class UtilesMain {
         return numCeldas;
     }
 
+    public static int capacidad(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese la capacidad de la celda: ");
+        int capacidad = sc.nextInt();
+        return capacidad;
+    }
+
+    public static int dias(){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Ingrese la cantidad de dias: ");
+        int dias = sc.nextInt();
+        return dias;
+    }
+
 }
