@@ -3,8 +3,12 @@ import Excepciones.PermisoDenegadoEx;
 import Guards.*;
 import Prisoners.Prisionero;
 import Rooms.Celda;
+import Utiles.JSONUtiles;
 import Utiles.UtilesMain;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import java.security.Guard;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -27,7 +31,7 @@ public class Sistema {
         try{
             Comun nuevo = UtilesMain.agregarGComun();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
-            System.out.println("Guardia comun agregado correctamente");
+            guardarGuardias();
         }catch (Exception e){
             System.out.println("Error al crear el guardia comun: "+ e.getMessage());
         }
@@ -38,7 +42,7 @@ public class Sistema {
         try{
             Armado nuevo = UtilesMain.agregarGuardiaArm();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
-            System.out.println("Guardia comun agregado con exito");
+            guardarGuardias();
         }catch (Exception e){
             System.out.println("Error al agregar guardia armado" + e.getMessage());
         }
@@ -49,7 +53,7 @@ public class Sistema {
         try{
             CapacitadoTaser nuevo = UtilesMain.agregarCT();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
-            System.out.println("Guardia comun agregado con exito");
+            guardarGuardias();
         }catch (Exception e){
             System.out.println("Error al agregar guardia capacitado taser" + e.getMessage());
         }
@@ -155,6 +159,7 @@ public class Sistema {
         try{
             Prisionero p = UtilesMain.prisionero();
             registroPrisioneros.agregar(p.getDni(),p);
+            guardarPrisioneros();
             System.out.println("Prisionero agregado exitosamente");
         }catch (Exception e){
             System.out.println("Error al agregar prisionero: " + e.getMessage());
@@ -273,4 +278,90 @@ public class Sistema {
     }
 
     //Celdas metodos
+
+
+
+    //JSON metodos
+    //serializar
+    public void guardarGuardias (){
+        try{
+            JSONArray arrGuardias = new JSONArray();
+            for (Guardia g :registroGuardias.getLista().values()){
+                arrGuardias.put(g.toJSON());
+            }
+            JSONUtiles.uploadJSON(arrGuardias, "guardias");
+            System.out.println("Guardias guardados correctamente en JSON");
+        } catch (Exception e){
+            System.out.println("Error al guardar los guardias: " + e.getMessage());
+        }
+    }
+
+    public void guardarPrisioneros (){
+        try{
+            JSONArray arrPrisioneros = new JSONArray();
+            for (Prisionero p :registroPrisioneros.getLista().values()){
+                arrPrisioneros.put(p.toJSON());
+            }
+            JSONUtiles.uploadJSON(arrPrisioneros, "prisioneros");
+            System.out.println("Prisioneros guardados correctamente en JSON");
+        } catch (Exception e){
+            System.out.println("Error al guardar los prisioneros: " + e.getMessage());
+        }
+    }
+
+    public void guardarTodo (){
+        guardarGuardias();
+        guardarPrisioneros();
+        //guardar celdas
+    }
+
+    //deserializar
+    public void cargarDatos (String archivo){
+        String contenido = JSONUtiles.downloadJSON(archivo);
+        if (contenido.isEmpty()){
+            return;
+        }
+
+        JSONObject obj = new JSONObject(contenido);
+
+        //Guardias
+        JSONArray arrGuardias = obj.getJSONArray("guardias");
+        for (int i = 0; i < arrGuardias.length(); i++){
+            JSONObject Gobj = arrGuardias.getJSONObject(i);
+            String tipo = Gobj.getString("tipo");
+
+            Guardia g = null;
+
+            switch (tipo){
+                case "Comun":
+                    g = Comun.fromJSON(Gobj);
+                    break;
+                case "Armado":
+                    g= Armado.fromJSON(Gobj);
+                    break;
+                case "CapacitadoTaser":
+                    g =  CapacitadoTaser.fromJSON(Gobj);
+                    break;
+                default:
+                    System.out.println("Tipo de guardia desconocido: "+ tipo);
+            }
+
+            if(g != null){
+                registroGuardias.agregar(g.getDni(), g);
+            }
+        }
+
+        //Prisioneros
+        JSONArray arrPrisioneros = obj.getJSONArray("prisioneros");
+        for (int i = 0; i < arrPrisioneros.length(); i++){
+            JSONObject Pobj = arrPrisioneros.getJSONObject(i);
+            Prisionero p = Prisionero.fromJSON(Pobj);
+            registroPrisioneros.agregar(p.getDni(), p);
+        }
+
+        //Celdas
+        System.out.println("Datos cargados correctamente desde " + archivo);
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package Prisoners;
 
 import Excepciones.AccionInvalidaEx;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 
@@ -75,16 +76,32 @@ public class Visita {
         System.out.println("Nueva visita registrada. Total: "+ p.getVisitasEsteMes());
     }
 
+    public JSONObject toJSON (){
+        JSONObject obj = new JSONObject();
+
+        obj.put("tipo" , "Visita");
+
+        //Atributos
+        obj.put("id" , getId());
+        obj.put("fecha" , getFecha().toString());
+        obj.put("estaAutorizado" , isEstaAutorizado());
+        obj.put("dniPresoAvisitar" , getDniPresoAvisitar());
+        obj.put("nombreVisitante" , getNombreVisitante());
+        obj.put("legajoGuardia" , getLegajoGuardia());
+        obj.put("cantidadVisitas" , getCantidadVisitas());
+        return obj;
+    }
+
     @Override
     public String toString() {
-        return "Prisoners.Visita{" +
-                "id=" + id +
-                ", fecha=" + fecha +
-                ", estaAutorizado=" + estaAutorizado +
-                ", dniPresoAvisitar='" + dniPresoAvisitar + '\'' +
-                ", nombreVisitante='" + nombreVisitante + '\'' +
-                ", legajoGuardia=" + legajoGuardia +
-                ", cantidadVisitas=" + cantidadVisitas +
-                '}';
+        return "\nVisita {" +
+                "\n  id = " + id +
+                "\n  fecha = " + fecha +
+                "\n  estaAutorizado = " + estaAutorizado +
+                "\n  dniPresoAvisitar = '" + dniPresoAvisitar + '\'' +
+                "\n  nombreVisitante = '" + nombreVisitante + '\'' +
+                "\n  legajoGuardia = " + legajoGuardia +
+                "\n  cantidadVisitas = " + cantidadVisitas +
+                "\n}\n";
     }
 }

@@ -3,6 +3,7 @@ package Prisoners;
 import Excepciones.AccionInvalidaEx;
 import Persona.Persona;
 import Rooms.Celda;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,6 +54,10 @@ public class Prisionero extends Persona {
 
     public int getLimiteVisitas() {
         return LimiteVisitas;
+    }
+
+    public void setVisitasDesdeJSON(int visitas) {
+        this.visitasEsteMes = visitas;
     }
 
     //Metodos
@@ -127,16 +132,68 @@ public class Prisionero extends Persona {
         this.visitasEsteMes++;
     }
 
+    //deserializacion
+    public static Prisionero fromJSON (JSONObject obj){
+        Prisionero p = new Prisionero(
+          obj.getString("nombre"),
+                obj.getString("apellido"),
+                obj.getString("dni"),
+                obj.getInt("edad"),
+                LocalDate.parse(obj.getString("fechaNacimiento")),
+                LocalDate.parse(obj.getString("fechaIngreso")),
+                null,
+                CrimenCometido.valueOf(obj.getString("crimenCometido")),
+                Seguridad.valueOf(obj.getString("seguridad")),
+                obj.getInt("condenaEnmeses")
+                );
+        p.setVisitasDesdeJSON(obj.getInt("visitasEsteMes"));
+        return p;
+    }
+
+    //serializacion
+    public JSONObject toJSON (){
+       JSONObject obj = new JSONObject();
+       obj.put ("tipo", "Prisionero");
+
+       //Atributos de persona
+        obj.put ("nombre", getNombre());
+        obj.put("apellido", getApellido());
+        obj.put("dni", getDni());
+        obj.put("edad", getEdad());
+        obj.put("fechaNacimiento", getFechaNacimiento());
+
+        //Atributos de prisionero
+        obj.put("fechaIngreso", getFechaIngreso());
+        obj.put("condenaEnmeses", getCondenaEnmeses());
+        obj.put("visitasEsteMes", getVisitasEsteMes());
+        obj.put("limiteVisitas", getLimiteVisitas());
+
+        if (getCeldaAsignada() != null){
+            obj.put("celdaAsignada", getCeldaAsignada().getNumeroDeCelda());
+        } else {
+            obj.put("celdaAsignada", JSONObject.NULL);
+        }
+
+        obj.put("crimenCometido", getCrimenCometido().toString());
+        obj.put("seguridad", getSeguridad().toString());
+        return obj;
+    }
+
     @Override
     public String toString() {
-        return "Prisionero{" +
-                "fechaIngreso=" + fechaIngreso +
-                ", celdaAsignada=" + celdaAsignada +
-                ", crimenCometido=" + crimenCometido +
-                ", seguridad=" + seguridad +
-                ", condenaEnmeses=" + condenaEnmeses +
-                ", visitasEsteMes=" + visitasEsteMes +
-                ", LimiteVisitas=" + LimiteVisitas +
-                "} " + super.toString();
+        return "\n--- PRISIONERO ---" +
+                "\nNombre: " + getNombre() +
+                "\nApellido: " + getApellido() +
+                "\nDNI: " + getDni() +
+                "\nEdad: " + getEdad() +
+                "\nFecha nacimiento: " + getFechaNacimiento() +
+                "\nFecha ingreso: " + fechaIngreso +
+                "\nCelda asignada: " + celdaAsignada +
+                "\nCrimen cometido: " + crimenCometido +
+                "\nNivel de seguridad: " + seguridad +
+                "\nCondena (meses): " + getCondenaEnmeses() +
+                "\nVisitas este mes: " + visitasEsteMes +
+                "\nLímite de visitas: " + getLimiteVisitas();
     }
+
 }

@@ -1,5 +1,7 @@
 package Guards;
 
+import org.json.JSONObject;
+
 import java.time.LocalDate;
 
 public class CapacitadoTaser extends Guardia {
@@ -43,11 +45,39 @@ public class CapacitadoTaser extends Guardia {
         System.out.println("Capacitacion actualizada para " + getNombre() + getApellido());
     }
 
+    //deserializacion
+    public static CapacitadoTaser fromJSON(JSONObject obj){
+        return  new CapacitadoTaser(
+                obj.getString("nombre"),
+                obj.getString("apellido"),
+                obj.getString("dni"),
+                obj.getInt("edad"),
+                LocalDate.parse(obj.getString("fechaNacimiento")),
+                obj.getInt("legajo"),
+                Turno.valueOf(obj.getString("turno")),
+                obj.getInt("numCelda"),
+                obj.getBoolean("enServicio"),
+                Rango.valueOf(obj.getString("rango")),
+                LocalDate.parse(obj.getString("fechaCapacitacion")),
+                obj.getBoolean("tieneTaser")
+        );
+    }
+
+    //serializacion
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj = super.toJSON();
+        obj.put("tipo", "CapacitadoTaser");
+        obj.put("fechaCapacitacion", getFechaCapacitacion().toString());
+        obj.put("tieneTaser", isTieneTaser());
+        return obj;
+    }
+
     @Override
     public String toString() {
-        return "Guards.CapacitadoTaser{" +
-                "fechaCapacitacion=" + fechaCapacitacion +
-                ", tieneTaser=" + tieneTaser +
-                "} " + super.toString();
+        return super.toString() +
+                "\nFecha capacitación: " + fechaCapacitacion +
+                "\nTiene taser: " + tieneTaser +
+                "\n----------------------\n";
     }
 }

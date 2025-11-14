@@ -3,9 +3,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
 
-       Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
 
-       Sistema sistema = new Sistema();
+        Sistema sistema = new Sistema();
+
+       try{
+           sistema.cargarDatos("archivos.json");
+       } catch (Exception e) {
+           System.out.println("Error" + e.getMessage());
+       }
+
 
        int opcion;
 
@@ -17,7 +24,6 @@ public class Main {
            System.out.println("1. Configuracion de Guardias");
            System.out.println("2. Configuracion de Prisioneros");
            System.out.println("3.Configuracion de Celdas");
-           System.out.println("4.Configuracion de Archivos");
            System.out.println("0. Salir");
            System.out.println("Seleccione una opcion: ");
 
@@ -64,6 +70,7 @@ public class Main {
                            sistema.asignarOactualizarTaser();
                            break;
                    }
+                   break;
                case 2:
                    System.out.println("----------Configuracion de Prisioneros----------");
                    Prisioneros();
@@ -107,18 +114,6 @@ public class Main {
                            break;
                    }
                    break;
-               case 4:
-                   System.out.println("----------Configuracion de Archivos----------");
-                   Archivos();
-
-                   int opcion4 = sc.nextInt();
-                   sc.nextLine();
-
-                   switch (opcion4){
-                       case 1:
-                           break;
-                   }
-                   break;
                case 0:
                    System.out.println("Saliendo del sistema....");
                    break;
@@ -132,6 +127,11 @@ public class Main {
 
        }while(opcion != 0);
 
+       try{
+           sistema.guardarTodo();
+       }catch (Exception e){
+           System.out.println("Error "+ e.getMessage());
+       }
 
     }
 
@@ -175,9 +175,4 @@ public class Main {
         System.out.println("Elige una opcion: ");
     }
 
-    public static void Archivos (){
-        System.out.println("Cargar datos en JSON");
-        System.out.println("Guardar datos en JSON");
-        System.out.println("Elige una opcion: ");
-    }
 }

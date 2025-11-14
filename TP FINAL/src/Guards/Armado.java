@@ -1,6 +1,7 @@
 package Guards;
 
 import Excepciones.PermisoDenegadoEx;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
 
@@ -38,10 +39,36 @@ public class Armado extends Guardia {
         }
     }
 
+    //deserializacion
+    public static Armado fromJSON(JSONObject obj){
+        return  new Armado(
+          obj.getString("nombre"),
+          obj.getString("apellido"),
+          obj.getString("dni"),
+          obj.getInt("edad"),
+          LocalDate.parse(obj.getString("fechaNacimiento")),
+          obj.getInt("legajo"),
+          Turno.valueOf(obj.getString("turno")),
+          obj.getInt("numCelda"),
+          obj.getBoolean("enServicio"),
+          Rango.valueOf(obj.getString("rango")),
+          Arma.valueOf(obj.getString("arma"))
+        );
+    }
+
+    //serializacion
+    @Override
+    public JSONObject toJSON() {
+        JSONObject obj = super.toJSON();
+        obj.put("tipo", "Armado");
+        obj.put("arma" , getArma().toString());
+        return obj;
+    }
+
     @Override
     public String toString() {
-        return "Guards.Armado{" +
-                "arma=" + arma +
-                "} " + super.toString();
+        return super.toString() +
+                "\nArma: " + arma +
+                "\n----------------------\n";
     }
 }
