@@ -52,6 +52,10 @@ public class Manager <T>{
         }
     }
 
+    public boolean estaVacio (){
+        return lista.isEmpty();
+    }
+
     @Override
     public String toString() {
         return "Manager{" +

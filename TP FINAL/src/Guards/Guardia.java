@@ -42,12 +42,13 @@ public abstract class Guardia extends Persona {
         return rango;
     }
 
+    //setters
     public void setEnServicio(boolean enServicio) {
         this.enServicio = enServicio;
     }
 
 
-
+    //Metodos
     public void iniciarServicio (){
         if (!enServicio){
             enServicio = true;

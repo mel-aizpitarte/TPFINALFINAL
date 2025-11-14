@@ -21,6 +21,7 @@ public class Armado extends Guardia {
         return arma;
     }
 
+    //Metodos
     //asignar o reasignar arma
     public void asignarArma (Arma nuevaArma)throws PermisoDenegadoEx {
         if (getRango() == Rango.COMISARIO_MAYOR){

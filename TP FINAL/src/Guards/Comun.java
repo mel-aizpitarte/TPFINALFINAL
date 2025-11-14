@@ -18,6 +18,7 @@ public class Comun extends Guardia {
         return tieneGasPimienta;
     }
 
+    //Metodos
     public boolean asignarGasPimienta (){
         if (!tieneGasPimienta){
             this.tieneGasPimienta = true;
@@ -34,17 +35,6 @@ public class Comun extends Guardia {
         } else{
             System.out.println("No puede patrullar, esta en descanso");
         }
-    }
-
-    @Override
-    public boolean darDescanso() {
-        if (isEnServicio() && getTurno() == Turno.MANIANA){
-           setEnServicio(false);
-            System.out.println("El guardia " + getNombre() + " tiene el descanso");
-        } else{
-            System.out.println("El guardia " + getNombre() + " ya estaba en el descanso");
-        }
-        return isEnServicio();
     }
 
     @Override

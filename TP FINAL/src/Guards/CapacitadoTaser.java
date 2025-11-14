@@ -17,6 +17,7 @@ public class CapacitadoTaser extends Guardia {
         return fechaCapacitacion;
     }
 
+    //Metodos
     public boolean isTieneTaser() {
         return tieneTaser;
     }
@@ -41,8 +42,6 @@ public class CapacitadoTaser extends Guardia {
         fechaCapacitacion = LocalDate.now();
         System.out.println("Capacitacion actualizada para " + getNombre() + getApellido());
     }
-
-
 
     @Override
     public String toString() {
