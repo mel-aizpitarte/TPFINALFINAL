@@ -127,6 +127,7 @@ public class Prisionero extends Persona {
         this.visitasEsteMes++;
     }
 
+
     @Override
     public String toString() {
         return "Prisionero{" +

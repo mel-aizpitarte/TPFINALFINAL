@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 public abstract class Celda implements Cuarentena {
 
     private boolean flag;
-    private boolean ocupado;
     private boolean lleno;
     private int numeroDeCelda;
     private int capacidad;
@@ -23,10 +22,6 @@ public abstract class Celda implements Cuarentena {
     public int getNumeroDeCelda() {return numeroDeCelda;}
 
     public int getCapacidad() {return capacidad;}
-
-    public boolean isOcupado() {return ocupado;}
-
-    public void setOcupado() {this.ocupado = !this.ocupado;}
 
     public boolean isLleno() {return lleno;}
 
@@ -76,7 +71,6 @@ public abstract class Celda implements Cuarentena {
     public String toString() {
         return "Numero de la Celda=" + numeroDeCelda +
                 ", Capacidad=" + capacidad +
-                ", Ocupado=" + ocupado +
                 ", Lleno=" + lleno +
                 ", Guardia Asignado=" + guardiaAsignado +
                 ", Ultima Inspeccion=" + ultimaInspeccion;

@@ -16,32 +16,38 @@ public class ConfinamientoSolitario extends Celda{
         this.diasDeAislamiento = this.diasDeAislamiento + diasDeAislamiento;
     }
 
-    public void terminarAislamiento(){
-        this.diasDeAislamiento = 0;
-        this.prisonero=null;
-        setLleno();
-        setOcupado();
+    public String terminarAislamiento(){
+        if(isLleno()) {
+            this.diasDeAislamiento = 0;
+            this.prisonero = null;
+            setLleno();
+            return "Se ha removido al prisionero correctamente";
+        }else{
+            return "La celda de confinamiento solitario ya esta vacia";
+        }
     }
 
     public Prisionero getPrisonero() {
+        if(this.prisonero==null){
+            return null;
+        }
         return prisonero;
     }
 
-    public String agregarPrisonero(Prisionero prisonero) throws AccionInvalidaEx {
+    public String agregarPrisonero(Prisionero prisonero, int diasDeAislamiento) throws AccionInvalidaEx {
         if(!isLleno()) {
             this.prisonero = prisonero;
             setLleno();
-            setOcupado();
+            extenderDiasDeAislamiento(diasDeAislamiento);
             return "Prisonero asignado a celda de confinamiento solitario";
         }else{
             throw new AccionInvalidaEx("La celda de confinamiento solitario ya esta ocupada");
         }
     }
 
-    public ConfinamientoSolitario(int numeroDeCelda, int capacidad, Prisionero prisonero, int diasDeAislamiento) {
+    public ConfinamientoSolitario(int numeroDeCelda, int capacidad) {
         super(numeroDeCelda, capacidad);
-        this.prisonero = prisonero;
-        this.diasDeAislamiento = diasDeAislamiento;
+        this.diasDeAislamiento = 0;
     }
 
     @Override
