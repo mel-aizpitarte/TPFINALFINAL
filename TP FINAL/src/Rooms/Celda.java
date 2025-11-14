@@ -31,6 +31,10 @@ public abstract class Celda implements Cuarentena {
     public String getUltimaInspeccion() {return ultimaInspeccion.toString();}
 
     public void setUltimaInspeccion(LocalDateTime ultimaInspeccion) {this.ultimaInspeccion = ultimaInspeccion;}
+
+    public boolean getFlag(){return flag;}
+
+    public void setFlag(){flag=!flag;}
     ///  Getters and setters
 
 
@@ -60,6 +64,20 @@ public abstract class Celda implements Cuarentena {
         this.flag= !this.flag;
     }
 
+    //serializacion
+    public JSONObject toJSON() {
+        JSONObject obj = new JSONObject();
+        obj.put("numeroDeCelda", numeroDeCelda);
+        obj.put("capacidad", capacidad);
+        obj.put("lleno", lleno);
+        obj.put("ultimaInspeccion", ultimaInspeccion != null ? ultimaInspeccion.toString() : "");
+
+        if (guardiaAsignado != null){
+            obj.put("guardiaAsignado", guardiaAsignado.toJSON());
+        }
+
+        return obj;
+    }
 
     public Celda(int numeroDeCelda, int capacidad) {
         this.flag=false;

@@ -1,14 +1,18 @@
 package Rooms;
 
 
+import Interfaces.Cuarentena;
 import Prisoners.CrimenCometido;
 import Prisoners.Prisionero;
 import Prisoners.Seguridad;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class CeldaComun extends Celda{
+public class CeldaComun extends Celda {
 
     private boolean hasTv;
     private ArrayList<Prisionero> presos;
@@ -22,7 +26,7 @@ public class CeldaComun extends Celda{
             }
         }
 
-        if(presos.size()==getCapacidad()){
+        if(presos.size()==getCapacidad() || getFlag()){
             return "Esta celda esta llena, no se ha asignado al prisionero";
         }else{
             presos.add(new Prisionero(nombre, apellido, dni, edad, fechaNacimiento, fechaIngreso, celdaAsignada, crimenCometido, seguridad, condenaEnmeses));
@@ -65,6 +69,47 @@ public class CeldaComun extends Celda{
         return presos.get(index).toString();
     }
 
+    //deserializar
+    public static CeldaComun fromJSON(JSONObject obj) {
+        int numero = obj.getInt("numeroDeCelda");
+        int capacidad = obj.getInt("capacidad");
+        CeldaComun celda = new CeldaComun(numero, capacidad);
+
+        celda.setUltimaInspeccion(LocalDateTime.parse(obj.getString("ultimaInspeccion")));
+        celda.setLleno(); // si en el JSON viene lleno, ajustamos
+
+        celda.hasTv = obj.getBoolean("hasTv"); // directamente
+
+        JSONArray arrPresos = obj.getJSONArray("presos");
+        for(int i = 0; i < arrPresos.length(); i++){
+            Prisionero p = Prisionero.fromJSON(arrPresos.getJSONObject(i));
+            celda.agregarPreso(p.getNombre(), p.getApellido(), p.getDni(), p.getEdad(),
+                    p.getFechaNacimiento(), p.getFechaIngreso(), celda, p.getCrimenCometido(),
+                    p.getSeguridad(), p.getCondenaEnmeses());
+        }
+
+        return celda;
+    }
+
+    @Override
+    public void cuarentena() {
+        setFlag();
+    }
+
+    //serializar
+    public JSONObject toJSON() {
+        JSONObject obj = super.toJSON(); // campos comunes de Celda
+        obj.put("tipo", "CeldaComun");
+        obj.put("hasTv", hasTv);
+
+        JSONArray arrPresos = new JSONArray();
+        for (Prisionero p : presos) {
+            arrPresos.put(p.toJSON());
+        }
+        obj.put("presos", arrPresos);
+
+        return obj;
+    }
 
     /// Getter setter
     public boolean getTv(){return hasTv;}

@@ -32,6 +32,7 @@ public class Sistema {
         try {
             Comun nuevo = UtilesMain.agregarGComun();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
+            guardarGuardias();
             System.out.println("Guardia comun agregado correctamente");
         } catch (Exception e) {
             return "Error al agregar guardia comun" + e.getMessage();
@@ -40,11 +41,10 @@ public class Sistema {
     }
 
     public void agregarGuardiaArmado() {
-
-
         try {
             Armado nuevo = UtilesMain.agregarGuardiaArm();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
+            guardarGuardias();
             System.out.println("Guardia comun agregado con exito");
         } catch (Exception e) {
             System.out.println("Error al agregar guardia armado" + e.getMessage());
@@ -56,6 +56,7 @@ public class Sistema {
         try {
             CapacitadoTaser nuevo = UtilesMain.agregarCT();
             registroGuardias.agregar(nuevo.getDni(), nuevo);
+            guardarGuardias();
             System.out.println("Guardia comun agregado con exito");
         } catch (Exception e) {
             System.out.println("Error al agregar guardia capacitado taser" + e.getMessage());
@@ -162,6 +163,7 @@ public class Sistema {
         try {
             Prisionero p = UtilesMain.prisionero();
             registroPrisioneros.agregar(p.getDni(), p);
+            guardarPrisioneros();
             System.out.println("Prisionero agregado exitosamente");
         } catch (Exception e) {
             System.out.println("Error al agregar prisionero: " + e.getMessage());
@@ -346,6 +348,7 @@ public class Sistema {
         }
 
         listaCeldas.add(new CeldaComun(numeroDeCelda, capacidad));
+        guardarCeldas();
         return "Celda cargada correctamente";
     }
 
@@ -361,6 +364,7 @@ public class Sistema {
         }
 
         listaCeldas.add(new ConfinamientoSolitario(numeroDeCelda, capacidad));
+        guardarCeldas();
         return "Celda cargada correctamente";
     }
 
@@ -458,10 +462,25 @@ public class Sistema {
         }
     }
 
+    public void guardarCeldas (){
+            try {
+                JSONArray arrCeldas = new JSONArray();
+                for (Celda c : listaCeldas) {
+                    arrCeldas.put(c.toJSON());
+                }
+
+                JSONUtiles.uploadJSON(arrCeldas, "celdas");
+                System.out.println("Celdas guardadas correctamente en JSON");
+            } catch (Exception e) {
+                System.out.println("Error al guardar las celdas: " + e.getMessage());
+            }
+
+    }
+
     public void guardarTodo (){
         guardarGuardias();
         guardarPrisioneros();
-        //guardar celdas
+        guardarCeldas();
     }
 
     //deserializar
@@ -507,7 +526,29 @@ public class Sistema {
             Prisionero p = Prisionero.fromJSON(Pobj);
             registroPrisioneros.agregar(p.getDni(), p);
         }
-}
+
+        //celdas
+        JSONArray arrCeldas = obj.getJSONArray("celdas");
+        for (int i = 0; i < arrCeldas.length(); i++) {
+            JSONObject Cobj = arrCeldas.getJSONObject(i);
+            String tipo = Cobj.getString("tipo");
+            Celda c = null;
+
+            switch (tipo) {
+                case "CeldaComun":
+                    c = CeldaComun.fromJSON(Cobj);
+                    break;
+                case "ConfinamientoSolitario": c =
+                        ConfinamientoSolitario.fromJSON(Cobj);
+                break;
+                default: System.out.println("Tipo de celda desconocido: " + tipo);
+            }
+
+            if (c != null){
+                listaCeldas.add(c);
+            }
+        }
+    }
 
    //menus
     public void menuGuardia (){
