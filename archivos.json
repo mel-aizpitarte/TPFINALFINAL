@@ -76,5 +76,33 @@
       "crimenCometido": "FRAUDE",
       "seguridad": "BAJA"
     }
+  ],
+  "celdas": [
+    {
+      "id": 1,
+      "tipo": "comun",
+      "capacidad": 4,
+      "prisioneros": [101, 102]
+    },
+    {
+      "id": 2,
+      "tipo": "comun",
+      "capacidad": 6,
+      "prisioneros": []
+    },
+    {
+      "id": 3,
+      "tipo": "solitario",
+      "capacidad": 1,
+      "prisioneros": [103],
+      "diasDeAislamiento": 10
+    },
+    {
+      "id": 4,
+      "tipo": "solitario",
+      "capacidad": 1,
+      "prisioneros": [],
+      "diasDeAislamiento": 1
+    }
   ]
 }
